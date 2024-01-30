@@ -1,0 +1,149 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+}
+
+.container {
+  display: flex;
+  margin: 0 auto;
+}
+
+/* left side */
+
+.left-side {
+  color: white;
+  padding: 20px 30px;
+  height: 100dvh;
+  width: 35%;
+  background-color: #2f80ed;
+}
+
+.ucsm {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  width: 70px;
+  height: 70px;
+}
+
+.cimage {
+  width: 20%;
+  height: 40%;
+  display: flex;
+  margin: 20px;
+  padding: 10px;
+}
+
+.about_myeik {
+  margin: 20px auto;
+}
+
+.content {
+  margin: 10px auto;
+  text-align: justify;
+}
+
+.contact {
+  display: flex;
+  align-items: center;
+  margin: 20px auto;
+  gap: 30px;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+a:hover {
+  text-decoration: underline;
+  color: cyan;
+}
+
+a:checked {
+  color: pink;
+}
+
+h4 {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+}
+
+.icon_justify {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* right side */
+
+.right-side {
+  height: 100vh;
+  width: 65%;
+  padding: 20px 30px;
+}
+
+h3 {
+  font-size: 40px;
+  font-weight: normal;
+  margin-bottom: 20px;
+}
+
+.arrow {
+  width: 20px;
+  height: 20px;
+  display: flex;
+}
+
+.text {
+  margin-bottom: 10px;
+}
+
+.alltextbox {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 10px auto;
+}
+
+.dropdown {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 10px auto;
+}
+
+select {
+  /* Set the desired width */
+  padding: 8px; /* Set padding for spacing */
+  font-size: 14px; /* Set the desired font size */
+  text-align: center; /* Center the text horizontally */
+}
+
+textarea {
+  width: 100%;
+}
+
+.buttongroup {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px;
+  border-radius: 20px;
+  padding: 5px 10px;
+}
+
+.buttongroup .change {
+  background-color: #2f80ed;
+}
