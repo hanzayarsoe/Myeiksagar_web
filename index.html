@@ -4,13 +4,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Myeiksagar</title>
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="style.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Single+Day&display=swap"
       rel="stylesheet"
     />
     <link
@@ -22,24 +25,38 @@
     <div class="container">
       <!-- left side -->
       <div class="left-side">
-        <div class="ucsm">
-          <img class="logo" src="images/school_logo.png" alt="school_logo" />
-          <span style="font-weight: bold">UCS-MYEIK</span>
-        </div>
+        <a href=""
+          ><div class="ucsm">
+            <img class="logo" src="images/school_logo.png" alt="school_logo" />
+            <span style="font-size: 18px; font-weight: bold">UCS-MYEIK</span>
+          </div></a
+        >
         <div class="cimage">
-          <img src="images/conservationicon-01.png" alt="conservation" />
+          <img
+            style="width: 17rem; height: 10rem"
+            src="images/conservationicon-01.png"
+            alt="conservation"
+          />
         </div>
 
         <div class="about_myeik">
           <h4>About of Myeik (Mergui)</h4>
-          <p class="content">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Soluta
-            consequuntur harum nesciunt qui? Nobis dolore voluptatem numquam
-            magni sequi harum provident corporis placeat? Voluptate voluptatum
-            sapiente quos quo esse eos quisquam fuga, quis consequuntur in
-            provident similique quasi porro odio?
+          <p
+            class="content"
+            title="References website: https://en.wikipedia.org/wiki/Myeik,_Myanmar"
+          >
+            မြိတ်မြို့ သည် မြန်မာနိုင်ငံ၊ တနင်္သာရီတိုင်းဒေသကြီး၊
+            မြိတ်ခရိုင်တွင် ပါဝင်သည့် မြိတ်မြို့နယ်၏ ခရိုင်
+            မြို့နယ်ရုံးစိုက်ရာမြို့ ဖြစ်သည်။ တနင်္သာရီတိုင်းဒေသကြီးတွင်
+            လူဦးရေအများဆုံးနှင့် အကြီးဆုံးမြို့လည်းဖြစ်သည်။ နေဝင်ရာ
+            အနောက်အရပ်တွင် ပထော်ပထက်တောင်ဟု ခေါ်သော ကျွန်းညီနောင် ရှိသည်။
+            ထင်ရှားသော စေတီပုထိုးမှာ လေးကျွန်းဆီမီးသိမ်တော်ကြီးစေတီတော် ဖြစ်ကာ၊
+            သိမ်တော်ကြီးစေတီတော်၊ သိမ်ကြီးတောင်ဟု အတိုခေါ်သည်။ ရေလုပ်ငန်း
+            ထွန်းကားသည်။ ရော်ဘာ၊ ဆီအုန်းတို့ကိုလည်း စိုက်ပျိုးသည့် ကမ်းရိုးတန်း
+            ဆိပ်ကမ်းမြို့ ဖြစ်သည်။
           </p>
         </div>
+
         <div class="contact">
           <p class="icon_justify">
             <img class="icon" src="images/mail-01.png" alt="email" />
@@ -61,12 +78,11 @@
           <div class="textbox1">
             <p class="text">
               <i class="fa-solid fa-circle-dot"></i>
-              <span>မြန်မာစကား</span>
+              <span>စံစကား</span>
             </p>
             <textarea
               name="Myanmar"
-              id=""
-              cols="40"
+              id="Myanmar"
               rows="5"
               placeholder="Enter text ....."
             ></textarea>
@@ -81,28 +97,37 @@
             </p>
             <textarea
               name="Myeik"
-              id=""
-              cols="40"
+              id="Myeik"
               rows="5"
               placeholder="Translate ....."
             ></textarea>
           </div>
         </div>
         <div class="dropdown">
-          <select name="option" id="">
-            <option value="sallabus">Sallabus</option>
+          <select name="option" id="dropdown">
+            <option value="syllabus">Syllabus</option>
             <option value="character">Character</option>
-            <option value="word">Word</option>
           </select>
+          <button id="translateBtn" class="buttongroup change">
+            Translate
+          </button>
         </div>
         <div class="transform">
-          <textarea name="Translation" id="" cols="30" rows="10"></textarea>
+          <textarea name="Translation" id="translate" rows="6"></textarea>
         </div>
         <div class="buttongroup">
-          <button class="buttongroup clear" type="clear">Clear</button>
-          <button class="buttongroup change" type="change">Change</button>
+          <button id="clearBtn" class="buttongroup clear">Clear</button>
+
+          <button id="segmentBtn" class="buttongroup segment">Segment</button>
         </div>
+        <footer>
+          <span class="developed"
+            >Copyright &copy; 2024 ucs-myeik | developed by hzys</span
+          >
+        </footer>
       </div>
     </div>
+    <!-- javascript file -->
+    <script type="module" src="script.js"></script>
   </body>
 </html>
