@@ -1,10 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import {
   getFirestore,
-  collection,
-  addDoc,
   doc,
-  setDoc,
   getDoc,
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 // TODO: Add SDKs for Firebase products that you want to use
@@ -42,9 +39,11 @@ function clearFields() {
 
 async function translateText() {
   var myanmarText = myanmar.value;
+  var loadingIndicator = document.getElementById("loadingIndicator");
 
   // Check if myanmarText is not empty before proceeding
   if (myanmarText.trim() !== "") {
+    loadingIndicator.style.display = "block";
     // Use getDoc to retrieve a document by its ID
     myanmarText = myanmarText.replace(/\s/g, "");
     const docRef = doc(db, "data", myanmarText);
@@ -62,6 +61,7 @@ async function translateText() {
     console.error("myanmarText is empty. Please provide a non-empty value.");
     alert(" ကျေးဇူးပြု၍ ပြောင်းလိုသော စားလုံးကိုရေးပေးပါ");
   }
+  loadingIndicator.style.display = "none";
 }
 
 const myConsonant = "\u1000-\u1021"; // "က-အ"
@@ -94,11 +94,6 @@ function segment(text) {
   }
   return outArray;
 }
-
-const BREAK_PATTERN_CHAR = new RegExp(
-  `((?!${ssSymbol})[${myConsonant}](?![${aThat}${ssSymbol}])|[${enChar}${otherChar}])`,
-  "mg"
-);
 
 function segmentWord(text) {
   var outArray = text.split("");
