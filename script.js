@@ -35,7 +35,16 @@ var clearBtn = document.getElementById("clearBtn");
 var segmentBtn = document.getElementById("segmentBtn");
 var swapBtn = document.getElementById("swapBtn");
 
+let rotationDegree = 0;
 function swap() {
+  rotationDegree += 180;
+  document.getElementById(
+    "swapBtn"
+  ).style.transform = `rotate(${rotationDegree}deg)`;
+  document.getElementById("textarea1").value = "";
+  document.getElementById("textarea2").value = "";
+  document.getElementById("translate").value = "";
+
   var spantext1 = document.getElementById("text1").innerText;
   var spantext2 = document.getElementById("text2").innerText;
 
