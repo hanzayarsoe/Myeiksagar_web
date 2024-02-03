@@ -3,6 +3,10 @@ import {
   getFirestore,
   doc,
   getDoc,
+  getDocs,
+  collection,
+  query,
+  where,
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 // TODO: Add SDKs for Firebase products that you want to use
 
@@ -21,24 +25,32 @@ const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
 
-var myanmar = document.getElementById("Myanmar");
-var myeik = document.getElementById("Myeik");
+var text1 = document.getElementById("textarea1");
+var text2 = document.getElementById("textarea2");
 var translate = document.getElementById("translate");
 var dropdown = document.getElementById("dropdown");
 
 var translateBtn = document.getElementById("translateBtn");
 var clearBtn = document.getElementById("clearBtn");
 var segmentBtn = document.getElementById("segmentBtn");
+var swapBtn = document.getElementById("swapBtn");
 
+function swap() {
+  var spantext1 = document.getElementById("text1").innerText;
+  var spantext2 = document.getElementById("text2").innerText;
+
+  document.getElementById("text1").innerText = spantext2;
+  document.getElementById("text2").innerText = spantext1;
+}
 function clearFields() {
-  myanmar.value = "";
-  myeik.value = "";
+  text1.value = "";
+  text2.value = "";
   translate.value = "";
   console.log("Cleared Successfully");
 }
 
-async function translateText() {
-  var myanmarText = myanmar.value;
+async function translateMyanmartoMyeik() {
+  var myanmarText = text1.value;
   var loadingIndicator = document.getElementById("loadingIndicator");
 
   // Check if myanmarText is not empty before proceeding
@@ -51,16 +63,52 @@ async function translateText() {
 
     if (docSnapshot.exists()) {
       // Display the value in myeikText
-      myeik.value = docSnapshot.data().value;
+      text2.value = docSnapshot.data().value;
       console.log("Document found with ID: ", myanmarText);
     } else {
       console.log("Document not found with ID: ", myanmarText);
       alert(myanmarText + "   ဆိုသည့် စကားလုံးကို ရှာမတွေ့ပါ");
+      text2.value = "";
     }
   } else {
     console.error("myanmarText is empty. Please provide a non-empty value.");
     alert(" ကျေးဇူးပြု၍ ပြောင်းလိုသော စားလုံးကိုရေးပေးပါ");
   }
+  loadingIndicator.style.display = "none";
+}
+
+async function translateMyeiktoMyanmar() {
+  var myeikText = text1.value;
+  var loadingIndicator = document.getElementById("loadingIndicator");
+
+  if (myeikText.trim() !== "") {
+    loadingIndicator.style.display = "block";
+    myeikText = myeikText.replace(/\s/g, "");
+
+    const collectionRef = collection(db, "data");
+    const q = query(collectionRef, where("value", "==", myeikText));
+
+    try {
+      const querySnapshot = await getDocs(q);
+
+      if (!querySnapshot.empty) {
+        // Assuming there's only one matching document
+        const doc = querySnapshot.docs[0];
+        text2.value = doc.id;
+        console.log("Document found with ID: ", doc.id);
+      } else {
+        console.log("No matching documents found for value: ", myeikText);
+        alert("No matching documents found for the given value");
+        text2.value = "";
+      }
+    } catch (error) {
+      console.error("Error getting documents: ", error);
+    }
+  } else {
+    console.error("myeikText is empty. Please provide a non-empty value.");
+    alert("Please provide a non-empty value.");
+  }
+
   loadingIndicator.style.display = "none";
 }
 
@@ -95,20 +143,28 @@ function segment(text) {
   return outArray;
 }
 
-function segmentWord(text) {
+function segmentChar(text) {
   var outArray = text.split("");
   return outArray;
 }
 
 clearBtn.addEventListener("click", clearFields);
-translateBtn.addEventListener("click", translateText);
+translateBtn.addEventListener("click", () => {
+  var source = document.getElementById("text1").innerText;
+  if (source == "စံစကား") {
+    translateMyanmartoMyeik();
+  } else {
+    translateMyeiktoMyanmar();
+  }
+});
+swapBtn.addEventListener("click", swap);
 segmentBtn.addEventListener("click", () => {
   var selectedMode = dropdown.value;
   if (selectedMode === "syllabus") {
-    var resultvalue = segment(myeik.value);
+    var resultvalue = segment(text2.value);
     translate.value = resultvalue.join(" | ");
   } else if (selectedMode === "character") {
-    var resultvalue = segmentWord(myeik.value);
+    var resultvalue = segmentChar(text2.value);
     translate.value = resultvalue.join(" | ");
   } else {
     alert("method not Found");

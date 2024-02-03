@@ -48,13 +48,13 @@
   .left-side {
     color: white;
     padding: 20px 30px;
-    height: 100dvh;
+    height: fit-content;
     width: 35%;
     background-color: #2f80ed;
   }
 
   .right-side {
-    height: 100vh;
+    height: 100dvh;
     width: 65%;
     padding: 20px 30px;
   }
@@ -130,17 +130,18 @@
   }
 
   /* right side */
-
   h3 {
-    font-size: 2.8rem;
+    font-size: 2.5rem;
     font-weight: bold;
     margin-bottom: 10px;
   }
 
   .arrow {
-    width: 20px;
-    height: 20px;
+    font-size: 1.2rem;
     display: flex;
+    cursor: pointer;
+    margin: 15px;
+    transition: transform 0.3s ease-in-out;
   }
 
   .text {
@@ -178,6 +179,7 @@
   }
 
   textarea {
+    font-size: medium;
     width: 100%;
     padding: 3%;
   }
@@ -238,12 +240,16 @@
   .alltextbox {
     display: flex;
     flex-direction: column;
+    margin: auto;
     align-items: center;
     justify-content: center;
   }
 
   .arrow {
-    display: none;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   /* right side */
