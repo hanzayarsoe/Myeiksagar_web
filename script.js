@@ -98,7 +98,7 @@ async function translateMyeiktoMyanmar() {
         console.log("Document found with ID: ", doc.id);
       } else {
         console.log("No matching documents found for value: ", myeikText);
-        alert("No matching documents found for the given value");
+        alert(myeikText + "   ဆိုသည့် စကားလုံးကို ရှာမတွေ့ပါ");
         text2.value = "";
       }
     } catch (error) {
@@ -106,7 +106,7 @@ async function translateMyeiktoMyanmar() {
     }
   } else {
     console.error("myeikText is empty. Please provide a non-empty value.");
-    alert("Please provide a non-empty value.");
+    alert(" ကျေးဇူးပြု၍ ပြောင်းလိုသော စားလုံးကိုရေးပေးပါ");
   }
 
   loadingIndicator.style.display = "none";
