@@ -1,0 +1,292 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto", "Single Day", sans-serif;
+}
+
+@media screen and (max-width: 1367px) {
+  .container {
+    display: flex;
+    margin: 0 auto;
+  }
+
+  #preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fff; /* Background color for the preloader */
+    z-index: 9999; /* Ensure the preloader appears above other content */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #loadingIndicator {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.8); /* Transparent black background */
+    color: #fff; /* White text */
+    border-radius: 10px;
+    text-align: center;
+    font-size: 18px;
+    z-index: 1000;
+  }
+
+  #loadingIndicator span {
+    display: inline-block;
+    margin-right: 5px;
+    width: 10px;
+    height: 10px;
+    background-color: #fff;
+    border-radius: 50%;
+    animation: loadingAnimation 1s infinite alternate;
+  }
+
+  @keyframes loadingAnimation {
+    to {
+      transform: scale(1.5);
+      opacity: 0.7;
+    }
+  }
+
+  /* left side */
+
+  .left-side {
+    color: white;
+    padding: 20px 30px;
+    height: fit-content;
+    width: 35%;
+    background-color: #2f80ed;
+  }
+
+  .right-side {
+    height: 100dvh;
+    width: 65%;
+    padding: 20px 30px;
+  }
+
+  a {
+    text-decoration: none;
+  }
+  .ucsm {
+    display: flex;
+    align-items: center;
+    color: white;
+  }
+
+  .logo {
+    width: 70px;
+    height: 70px;
+  }
+
+  .cimage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 15px;
+    padding: 10px;
+  }
+
+  .about_myeik {
+    margin: 25px auto;
+  }
+
+  .content {
+    margin: 10px auto;
+    text-align: justify;
+  }
+
+  .contact {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 1rem;
+    gap: 15px;
+  }
+
+  .contact a {
+    color: inherit;
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  .contact a:hover {
+    text-decoration: underline;
+    color: cyan;
+  }
+
+  .contact a:checked {
+    color: pink;
+  }
+
+  h4 {
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  .icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .icon_justify {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  /* right side */
+  h3 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .arrow {
+    font-size: 1.2rem;
+    display: flex;
+    cursor: pointer;
+    margin: 15px;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .text {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+
+  .textbox1,
+  .textbox2 {
+    width: 100%;
+  }
+
+  .alltextbox {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px auto;
+  }
+
+  .dropdown {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-evenly;
+    margin: 10px auto;
+  }
+
+  select {
+    padding: 8px;
+    font-size: 14px;
+    text-align: center;
+  }
+
+  textarea {
+    font-size: medium;
+    width: 100%;
+    padding: 3%;
+  }
+
+  .buttongroup {
+    gap: 1rem;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    border: none;
+    border-radius: 15px;
+  }
+
+  .change,
+  .segment {
+    color: whitesmoke;
+    background-color: #2f80ed;
+  }
+
+  .change,
+  .clear,
+  .segment {
+    font-size: 0.9rem;
+    width: 80px;
+    height: 40px;
+    cursor: pointer;
+  }
+
+  .developed {
+    font-family: "Single Day", sans-serif;
+    font-size: 16px;
+    margin-top: 1.5rem;
+    font-style: italic;
+    display: flex;
+    justify-content: right;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  #loadingIndicator {
+    font-size: 14px;
+  }
+
+  /* left side */
+
+  .left-side {
+    width: 100%;
+    height: 100%;
+    padding: 10px 10px;
+  }
+
+  /* right side */
+  .right-side {
+    width: 100%;
+    height: 100%;
+    padding: 10px 20px;
+  }
+
+  h3 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .alltextbox {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .arrow {
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem 0;
+  }
+
+  .text {
+    margin-top: 0;
+  }
+
+  .developed {
+    align-items: center;
+    justify-content: center;
+    margin-top: 15px;
+  }
+}
+
+/* make responsive */
