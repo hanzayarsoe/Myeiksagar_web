@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, render_template, request
-from static.seg import segment_word
+from seg import segment_word
 
 app = Flask(__name__)
 
