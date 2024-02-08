@@ -50,9 +50,10 @@ function swap() {
   document.getElementById(
     "swapBtn"
   ).style.transform = `rotate(${rotationDegree}deg)`;
-  document.getElementById("textarea1").value = "";
-  document.getElementById("textarea2").value = "";
-  document.getElementById("translate").value = "";
+
+  var temp = text1.value;
+  text1.value = text2.value;
+  text2.value = temp;
 
   var spantext1 = document.getElementById("text1").innerText;
   var spantext2 = document.getElementById("text2").innerText;
@@ -206,8 +207,7 @@ segmentBtn.addEventListener("click", () => {
   } else {
     var myanOrMyeik = document.getElementById("text1").innerText;
     if (myanOrMyeik == "ဘိတ်စကား") {
-      alert("ဘိတ်စကားအတွက် word ဖြတ်ပေးသော လုပ်ဆောင်ချက်ကို မထည့်သွင်းရသေးပါ");
-      text1.value = "";
+      segmentWord(text1.value);
     } else {
       segmentWord(text1.value);
     }
