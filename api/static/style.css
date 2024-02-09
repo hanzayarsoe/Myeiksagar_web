@@ -5,9 +5,10 @@
   font-family: "Roboto", "Single Day", sans-serif;
 }
 
-@media screen and (max-width: 2000px) {
+@media screen {
   .container {
     display: flex;
+    height: 100%;
     margin: 0 auto;
   }
 
@@ -61,7 +62,7 @@
   .left-side {
     color: white;
     padding: 20px 30px;
-    height: fit-content;
+    height: 100%;
     width: 35%;
     background-color: #2f80ed;
   }

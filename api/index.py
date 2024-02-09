@@ -1,12 +1,14 @@
-# Word Segmentation for Burmese Language using Conditional Random Field
-# Author : Thura Aung
-# 5 July, 2022
 import pycrfsuite
+from flask import Flask, jsonify, render_template, request
+
+app = Flask(__name__)
+
+# create segment function
 
 
 # open trained model
 tagger = pycrfsuite.Tagger()
-tagger.open('./mm-word-segmentation-300.crfsuite')
+tagger.open('./api/mm-word-segmentation-300.crfsuite')
 
 # here sentence is prepared_sentence and i is length of prepared_sentence
 
@@ -89,3 +91,21 @@ def segment_word(sentence):
             complete += sent[i]
     # print(type(sent))
     return complete
+
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+
+@app.route('/translate', methods=['POST'])
+def wordTranslation():
+    data = request.json
+    text_to_translate = data.get('text')
+    translated_text = segment_word(text_to_translate)
+
+    return jsonify({'translated_text': translated_text})
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
