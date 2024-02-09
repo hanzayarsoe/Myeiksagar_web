@@ -6,7 +6,7 @@ import pycrfsuite
 
 # open trained model
 tagger = pycrfsuite.Tagger()
-tagger.open('./api/mm-word-segmentation-300.crfsuite')
+tagger.open('./mm-word-segmentation-300.crfsuite')
 
 # here sentence is prepared_sentence and i is length of prepared_sentence
 

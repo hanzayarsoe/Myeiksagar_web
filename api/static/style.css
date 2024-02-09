@@ -5,7 +5,7 @@
   font-family: "Roboto", "Single Day", sans-serif;
 }
 
-@media screen and (max-width: 1367px) {
+@media screen and (max-width: 2000px) {
   .container {
     display: flex;
     margin: 0 auto;
