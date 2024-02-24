@@ -154,6 +154,7 @@ const BREAK_PATTERN = new RegExp(
 );
 
 function segmentSyllabus(text) {
+  text = text.replace(/\s/g, "");
   var outArray = text.replace(BREAK_PATTERN, "𝕊$1").split("𝕊");
   if (outArray.length > 0) {
     outArray.shift();
@@ -162,11 +163,13 @@ function segmentSyllabus(text) {
 }
 
 function segmentChar(text) {
+  text = text.replace(/\s/g, "");
   var outArray = text.split("");
   return outArray;
 }
 
 function segmentWord(text) {
+  text = text.replace(/\s/g, "");
   try {
     fetch("/translate", {
       method: "POST",
