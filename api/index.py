@@ -85,7 +85,7 @@ def segment_word(sentence):
     for i, p in enumerate(prediction):
         # if label of character in sentence is 1 then brack that word from that place and add into complete
         if p == "1":
-            complete += " | " + sent[i]
+            complete += "   " + sent[i]
         # if label of character in sentence is 0 then add that word as it is into complete
         else:
             complete += sent[i]

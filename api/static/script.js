@@ -197,19 +197,23 @@ translateBtn.addEventListener("click", () => {
 });
 swapBtn.addEventListener("click", swap);
 segmentBtn.addEventListener("click", () => {
-  var selectedMode = dropdown.value;
-  if (selectedMode === "syllable") {
-    var resultvalue = segmentSyllabus(text1.value);
-    translate.value = resultvalue.join(" | ");
-  } else if (selectedMode === "character") {
-    var resultvalue = segmentChar(text1.value);
-    translate.value = resultvalue.join(" | ");
+  if (translate.value === "") {
+    alert("ကျေးဇူးပြု၍ ဖြတ်လိုသောစာကိုရေးပေးပါ။");
   } else {
-    var myanOrMyeik = document.getElementById("text1").innerText;
-    if (myanOrMyeik == "ဘိတ်စကား") {
-      segmentWord(text1.value);
+    var selectedMode = dropdown.value;
+    if (selectedMode === "syllable") {
+      var resultvalue = segmentSyllabus(translate.value);
+      translate.value = resultvalue.join("   ");
+    } else if (selectedMode === "character") {
+      var resultvalue = segmentChar(translate.value);
+      translate.value = resultvalue.join("   ");
     } else {
-      segmentWord(text1.value);
+      var myanOrMyeik = document.getElementById("translate").innerText;
+      if (myanOrMyeik == "ဘိတ်စကား") {
+        segmentWord(translate.value);
+      } else {
+        segmentWord(translate.value);
+      }
     }
   }
 });

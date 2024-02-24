@@ -25,7 +25,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     />
   </head>
-  <body>
+  <body id="content">
     <div id="preloader">
       <!-- Embed the SVG file -->
       <object
@@ -38,14 +38,14 @@
     <div class="container">
       <!-- left side -->
       <div class="left-side">
-        <a href=""
+        <a href="" style="text-decoration: none;"
           ><div class="ucsm">
             <img
               class="logo"
               src="static/images/school_logo.png"
               alt="school_logo"
             />
-            <span style="font-size: 18px; font-weight: bold">UCS-MYEIK</span>
+            <span style="font-size: 18px; font-weight: bold;">UCS-MYEIK</span>
           </div></a
         >
         <div class="cimage">
@@ -62,30 +62,52 @@
             class="content"
             title="References website: https://en.wikipedia.org/wiki/Myeik,_Myanmar"
           >
-          In a world where people need to talk and understand each other, it's important to break down language barriers. Myanmar, a country with different cultures and languages, has a special place called the Myeik region in the south of Myanmar. There, people speak various languages, making it hard for them to communicate easily. To solve this problem, they came up with the <b><i>Burmese-Myeik Translation System</i></b>. It's a cool way to use technology (Natural Language Processing or NLP) to help machines understand and translate human languages. This way, people can talk to each other more easily.
+          &nbsp;&nbsp;&nbsp;&nbsp;In a world where people need to talk and understand each other, it's important to break down language barriers. Myanmar, a country with different cultures and languages, has a special place called the Myeik region in the south of Myanmar. There, people speak various languages, making it hard for them to communicate easily. To solve this problem, they came up with the <b><i>Burmese-Myeik Translation System</i></b>. It's a cool way to use technology (Natural Language Processing or NLP) to help machines understand and translate human languages. This way, people can talk to each other more easily.
             <a
               target="_blank"
-              style="color: greenyellow"
+              style="color: cyan;"
               href="https://myanmar.gov.mm/-/inl-1?redirect=%2Fabout-myanmar"
               ><span>about Myeik....</span></a
+            ><br><br>
+            <a
+              target="_blank"
+              style="color: cyan;" onmouseover="this.style.color=cyan"
+              href="https://myeiksagar-collect.vercel.app/"
+              ><span>Click to collect data & check stored data</span></a
             >
           </p>
         </div>
-
         <div class="contact">
           <p class="icon_justify">
             <img class="icon" src="static/images/mail-01.png" alt="email" />
-            <a href="mailto:hanzayarsoe404@gmail."> Ucsmyeik@gmail.com</a>
+            <a href="mailto:hanzayarsoe404@gmail."> info@ucsmyeik.edu.mm</a>
           </p>
           <p class="icon_justify">
             <img class="icon" src="static/images/phone-01.png" alt="phone" />
-            <a href="tel:+959753778925"> +95-975278925</a>
+            <a href="tel:+959753778925"> +95-9-8762778</a>
           </p>
         </div>
       </div>
       <!-- right side -->
       <div class="right-side">
-        <h3>Burmese - Myeik Language Translation</h3>
+        <h3>Burmese - Myeik Language Segmentation</h3>
+        <div>
+          <textarea style="margin-top: 1rem;"
+            name="Translation"
+            id="translate"
+            rows="6"
+            placeholder="မိမိဖြတ်လိုသော စာကြောင်းကိုရေးပေးပါ..."
+          ></textarea>
+        </div>
+        <div class="buttongroup">
+          <select name="option" id="dropdown" class="buttongroup" style="width: fit-content;color: white;background-color: rgba(7, 182, 7, 0.87);">
+            <option value="character">Character</option>
+            <option value="syllable">Syllable</option>
+            <option value="word">Word</option>
+          </select>
+          <button id="segmentBtn" class="buttongroup segment">Segment</button>
+        </div>
+        <hr style="opacity: 0.2;color: rgb(224, 224, 224); margin-top: 1rem;">
         <div class="alltextbox">
           <div class="textbox1">
             <p class="text">
@@ -117,7 +139,6 @@
               />
             </svg>
           </div>
-
           <div class="textbox2">
             <p class="text">
               <i style="color: #2f80ed" class="fa-solid fa-circle"></i>
@@ -132,28 +153,10 @@
           </div>
         </div>
         <div class="dropdown">
-          <select name="option" id="dropdown">
-            <option value="syllable">Syllable</option>
-            <option value="character">Character</option>
-            <option value="word">Word</option>
-          </select>
           <button id="translateBtn" class="buttongroup change">
             Translate
           </button>
-        </div>
-        <div class="transform">
-          <textarea
-            name="Translation"
-            id="translate"
-            rows="6"
-            placeholder="Click the Segment button to check the segmentation of text...."
-            disabled
-          ></textarea>
-        </div>
-        <div class="buttongroup">
           <button id="clearBtn" class="buttongroup clear">Clear</button>
-
-          <button id="segmentBtn" class="buttongroup segment">Segment</button>
         </div>
         <footer>
           <span class="developed"

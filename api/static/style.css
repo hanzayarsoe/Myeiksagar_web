@@ -8,8 +8,10 @@
 @media screen {
   .container {
     display: flex;
+    width: 100%;
     height: 100%;
     margin: 0 auto;
+    background: linear-gradient(to bottom, #3378ff, #9442fe);
   }
 
   #preloader {
@@ -62,15 +64,13 @@
   .left-side {
     color: white;
     padding: 20px 30px;
-    height: 100%;
     width: 35%;
-    background-color: #2f80ed;
   }
 
   .right-side {
-    height: 100dvh;
     width: 65%;
     padding: 20px 30px;
+    background-color: white;
   }
 
   a {
@@ -102,6 +102,7 @@
   .content {
     margin: 10px auto;
     text-align: justify;
+    color: rgb(255, 247, 237);
   }
 
   .contact {
@@ -118,7 +119,7 @@
     font-weight: bold;
   }
 
-  .contact a:hover {
+  a:hover {
     text-decoration: underline;
     color: cyan;
   }
@@ -128,7 +129,7 @@
   }
 
   h4 {
-    font-size: 20px;
+    font-size: 25px;
     font-weight: bold;
   }
 
@@ -154,7 +155,7 @@
     font-size: 1.2rem;
     display: flex;
     cursor: pointer;
-    margin: 15px;
+    margin: 10px;
     transition: transform 0.3s ease-in-out;
   }
 
@@ -162,7 +163,7 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    margin-top: 20px;
+    margin-top: 1rem;
     margin-bottom: 10px;
   }
 
@@ -182,7 +183,8 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: space-evenly;
+    gap: 2rem;
+    justify-content: center;
     margin: 10px auto;
   }
 
@@ -196,17 +198,18 @@
     font-size: medium;
     width: 100%;
     padding: 3%;
+    border-radius: 10px;
   }
 
   .buttongroup {
-    gap: 1rem;
+    gap: 2rem;
     font-size: 1rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 10px;
+    margin-top: 5px;
     border: none;
-    border-radius: 15px;
+    border-radius: 30px;
   }
 
   .change,
@@ -215,6 +218,7 @@
     background-color: #2f80ed;
   }
 
+  #dropdown,
   .change,
   .clear,
   .segment {
@@ -230,12 +234,13 @@
     margin-top: 1.5rem;
     font-style: italic;
     display: flex;
-    justify-content: right;
+    justify-content: center;
   }
 }
 
 @media screen and (max-width: 768px) {
   .container {
+    height: 100%;
     flex-direction: column;
   }
 
@@ -276,7 +281,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 1rem 0;
+    margin: 0.5rem 0;
   }
 
   .text {
