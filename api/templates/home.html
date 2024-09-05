@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ဘိတ်စကား</title>
+    <link
+      rel="shortcut icon"
+      href="../static/images/favicon.ico"
+      type="image/x-icon"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script
+      src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"
+      defer
+    ></script>
+    <style>
+      .arrow {
+        font-size: 1.2rem;
+        display: flex;
+        cursor: pointer;
+        margin: 10px;
+        transition: transform 0.3s ease-in-out;
+      }
+      #loadingIndicator {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 20px;
+        background-color: rgba(0, 0, 0, 0.8);
+        color: #fff;
+        border-radius: 10px;
+        text-align: center;
+        font-size: 18px;
+        z-index: 1000;
+      }
+      #preloader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #fff;
+        z-index: 9999;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100" id="content" style="display: block">
+    <div id="preloader">
+      <!-- Embed the SVG file -->
+      <object
+        id="preloader-svg"
+        data="../static/images/bean-preloader.svg"
+        type="image/svg+xml"
+      ></object>
+    </div>
+    <div id="loadingIndicator">ခဏစောင့်ပါ ....</div>
+    <header x-data="{ isOpen: false }" class="bg-white shadow-md">
+      <nav
+        class="container mx-auto px-4 py-2 flex items-center justify-between"
+      >
+        <!-- Logo -->
+        <div class="flex items-center">
+          <img
+            src="../static/images/school_logo.png"
+            alt="Logo"
+            class="rounded-full"
+            style="width: 60px; height: 60px"
+          />
+        </div>
+
+        <!-- Nav Links (Desktop) -->
+        <div class="hidden md:flex items-center space-x-4">
+          <a
+            href="{{ url_for('index') }}"
+            class="bg-black text-white py-2 px-4 hover:bg-gray-800 rounded-md"
+            >Home</a
+          >
+          <a
+            href="{{url_for('quiz_start_page')}}"
+            class="text-gray-800 py-2 px-4 hover:text-gray-600 hover:bg-gray-100 rounded-md"
+            >Fun Game</a
+          >
+          <a
+            href="https://myeiksagar-collect.vercel.app/"
+            target="_blank"
+            class="text-gray-800 py-2 px-4 hover:text-gray-600 hover:bg-gray-100 rounded-md"
+            >Insert Data</a
+          >
+          <a
+            href="{{url_for('about')}}"
+            class="text-gray-800 py-2 px-4 hover:text-gray-600 hover:bg-gray-100 rounded-md"
+            >About Us</a
+          >
+          <a
+            href="{{url_for('contact')}}"
+            class="text-gray-800 py-2 px-4 hover:text-gray-600 hover:bg-gray-100 rounded-md"
+            >Contact us</a
+          >
+        </div>
+
+        <!-- Mobile Nav Button -->
+        <div class="md:hidden">
+          <button
+            @click="isOpen = !isOpen"
+            type="button"
+            class="text-gray-500 hover:text-gray-600 focus:outline-none focus:text-gray-600"
+            aria-label="toggle menu"
+          >
+            <svg viewBox="0 0 24 24" class="h-6 w-6 fill-current">
+              <path
+                fill-rule="evenodd"
+                d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2z"
+              ></path>
+            </svg>
+          </button>
+        </div>
+      </nav>
+
+      <!-- Mobile Menu -->
+      <div
+        x-show="isOpen"
+        x-transition:enter="transition ease-out duration-200"
+        x-transition:enter-start="opacity-0 transform scale-90"
+        x-transition:enter-end="opacity-100 transform scale-100"
+        x-transition:leave="transition ease-in duration-200"
+        x-transition:leave-start="opacity-100 transform scale-100"
+        x-transition:leave-end="opacity-0 transform scale-90"
+        class="md:hidden bg-white shadow-lg z-10 px-4 py-4 space-y-2"
+      >
+        <a
+          href="{{ url_for('index') }}"
+          class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50"
+          >Home</a
+        >
+        <a
+          href="{{url_for('quiz_start_page')}}"
+          class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50"
+          >Fun Game</a
+        >
+        <a
+          href="https://myeiksagar-collect.vercel.app/"
+          target="_blank"
+          class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50"
+          >Insert Data</a
+        >
+        <a
+          href="{{url_for('about')}}"
+          class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50"
+          >About Us</a
+        >
+        <a
+          href="{{url_for('contact')}}"
+          class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50"
+          >Contact us</a
+        >
+      </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-8">
+      <div class="flex flex-wrap -mx-4">
+        <div class="w-full lg:w-2/3 px-4 mb-8">
+          <div class="bg-orange-100 rounded-lg shadow-md p-6">
+            <div class="flex items-center -mx-2 mb-4">
+              <div class="w-full md:w-1/2 px-2 mb-4">
+                <p class="mb-5">
+                  <i
+                    style="color: rgba(7, 182, 7, 0.87)"
+                    class="fa-solid fa-circle mr-2"
+                  ></i>
+                  <span id="text1">စံစကား</span>
+                </p>
+                <textarea
+                  id="textarea1"
+                  class="shadow appearance-none border rounded w-full h-32 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  rows="4"
+                  placeholder="Enter Text...."
+                ></textarea>
+              </div>
+              <div>
+                <!--?xml version="1.0" ?--><svg
+                  class="arrow"
+                  id="swapBtn"
+                  fill="none"
+                  height="30"
+                  viewBox="0 0 24 24"
+                  width="70"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M15.2069 2.29154L19.2069 6.28731C19.5676 6.64758 19.5956 7.21473 19.2909 7.60719L19.2078 7.70144L15.2078 11.7067C14.8175 12.0975 14.1843 12.0979 13.7935 11.7076C13.4328 11.3474 13.4047 10.7801 13.7095 10.3877L13.7926 10.2934L16.0832 8.00002L5.49951 8.00003C4.98668 8.00003 4.56401 7.61399 4.50624 7.11666L4.49951 7.00003C4.49951 6.4872 4.88555 6.06453 5.38289 6.00676L5.49951 6.00003L16.0902 6.00002L13.7935 3.7065C13.4328 3.34621 13.4048 2.77899 13.7096 2.38654L13.7927 2.29229C14.153 1.93162 14.7202 1.90359 15.1127 2.2084L15.2069 2.29154L19.2069 6.28731L15.2069 2.29154ZM19.4902 16.8834L19.497 17C19.497 17.5129 19.1109 17.9355 18.6136 17.9933L18.497 18L7.91319 18L10.207 20.2926C10.5676 20.6529 10.5956 21.2201 10.2908 21.6126L10.2076 21.7068C9.84731 22.0675 9.2801 22.0955 8.88766 21.7906L8.79341 21.7075L4.79341 17.7112C4.43276 17.3509 4.40476 16.7837 4.70961 16.3913L4.79275 16.297L8.79275 12.2933C9.18309 11.9026 9.81626 11.9023 10.207 12.2926C10.5676 12.6529 10.5956 13.2201 10.2908 13.6126L10.2076 13.7068L7.91719 16L18.497 16C19.0098 16 19.4325 16.3861 19.4902 16.8834L19.497 17L19.4902 16.8834Z"
+                    fill="#212121"
+                  ></path>
+                </svg>
+              </div>
+              <div class="w-full md:w-1/2 px-2 mb-4">
+                <p class="text mb-5">
+                  <i style="color: #2f80ed" class="fa-solid fa-circle mr-2"></i>
+                  <span id="text2">ဘိတ်စကား</span><br />
+                </p>
+                <textarea
+                  id="textarea2"
+                  class="shadow appearance-none border rounded w-full h-32 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  rows="4"
+                  placeholder="Enter Text...."
+                  disabled
+                ></textarea>
+              </div>
+            </div>
+            <div class="flex justify-center space-x-4">
+              <button
+                id="translateBtn"
+                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline"
+              >
+                Translate
+              </button>
+              <button
+                id="clearBtn"
+                class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline"
+              >
+                Clear
+              </button>
+            </div>
+            <div class="mt-8">
+              <h2 class="text-2xl font-bold mb-4">
+                Burmese - Myeik Language Segmentation
+              </h2>
+              <div class="flex items-center space-x-4">
+                <textarea
+                  id="translate"
+                  class="flex-grow shadow appearance-none border rounded w-full h-32 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  rows="4"
+                  placeholder="မိမိဖြတ်လိုသောစာကြောင်းကိုရေးပါ..."
+                ></textarea>
+              </div>
+              <div class="mt-4 flex justify-center">
+                <label for="character" class="sr-only">Character</label>
+                <div class="relative mr-2">
+                  <select
+                    id="dropdown"
+                    name="character"
+                    class="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-2 px-4 pr-8 rounded-full leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                  >
+                    <option value="character">Character</option>
+                    <option value="syllable">Syllable</option>
+                    <option value="word">Word</option>
+                  </select>
+                  <div
+                    class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
+                  >
+                    <svg
+                      class="fill-current h-4 w-4"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
+                      />
+                    </svg>
+                  </div>
+                </div>
+                <button
+                  id="segmentBtn"
+                  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline"
+                >
+                  Segment
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="w-full lg:w-1/3 px-4">
+          <a
+            class="weatherwidget-io mb-10"
+            href="https://forecast7.com/en/12d4598d63/myeik/"
+            data-label_1="MYEIK"
+            data-label_2="WEATHER"
+            data-theme="original"
+            >MYEIK WEATHER</a
+          >
+          <div
+            x-data="carousel()"
+            x-init="startAutoSlide()"
+            class="bg-white rounded-lg shadow-md p-6"
+          >
+            <div class="relative overflow-hidden">
+              <div
+                class="flex transition-transform duration-300 ease-in-out"
+                :style="{ transform: `translateX(-${currentIndex * 100}%)` }"
+              >
+                <template x-for="(image, index) in images" :key="index">
+                  <img
+                    :src="image"
+                    alt="Scenic view"
+                    class="w-full h-60 object-cover flex-shrink-0"
+                  />
+                </template>
+              </div>
+            </div>
+            <div class="flex justify-center space-x-2 mt-4">
+              <template x-for="(dot, index) in images" :key="index">
+                <button
+                  @click="currentIndex = index"
+                  class="w-2 h-2 rounded-full transition-colors duration-200 ease-in-out"
+                  :class="currentIndex === index ? 'bg-blue-500' : 'bg-gray-300'"
+                ></button>
+              </template>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script>
+      !(function (d, s, id) {
+        var js,
+          fjs = d.getElementsByTagName(s)[0];
+        if (!d.getElementById(id)) {
+          js = d.createElement(s);
+          js.id = id;
+          js.src = "https://weatherwidget.io/js/widget.min.js";
+          fjs.parentNode.insertBefore(js, fjs);
+        }
+      })(document, "script", "weatherwidget-io-js");
+
+      function carousel() {
+        return {
+          currentIndex: 0,
+          images: [
+            "/static/images/img1.jpg",
+            "/static/images/img2.jpg",
+            "/static/images/img3.jpg",
+            "/static/images/img4.jpg",
+            "/static/images/img5.jpg",
+            "/static/images/img6.jpg",
+            "/static/images/img7.jpg",
+            "/static/images/img8.jpg",
+            "/static/images/img9.jpg",
+          ],
+          startAutoSlide() {
+            setInterval(() => {
+              this.currentIndex = (this.currentIndex + 1) % this.images.length;
+            }, 3000); // Change slide every 3 seconds
+          },
+        };
+      }
+    </script>
+    <script
+      type="module"
+      src="{{url_for('static', filename='js/script.js')}}"
+    ></script>
+  </body>
+</html>

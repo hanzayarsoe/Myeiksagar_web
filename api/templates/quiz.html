@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz App</title>
+    <style>
+      /* Existing styles */
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #fff3e0; /* Light yellow background */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+
+      .quiz-container {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        width: 80dvw;
+        max-width: 600px; /* Maximum width for larger screens */
+        text-align: center;
+      }
+
+      .quiz-header {
+        margin-bottom: 10px;
+      }
+
+      .progress-bar {
+        height: 5px;
+        background-color: #ff5252;
+        border-radius: 2px;
+        margin-bottom: 15px;
+      }
+
+      .question {
+        font-weight: bold;
+        margin-bottom: 15px;
+        font-size: 1.2em;
+      }
+
+      .options {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .options li {
+        margin-bottom: 10px;
+        text-align: left;
+      }
+
+      .options input[type="radio"] {
+        margin-right: 10px;
+      }
+
+      .btn-submit {
+        background-color: #4189e8;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        text-transform: uppercase;
+        width: 100%; /* Full width button for better usability */
+      }
+
+      .btn-submit:hover {
+        background-color: #217af0;
+      }
+
+      .timer {
+        font-size: 0.9em;
+        color: #777;
+        margin-bottom: 10px;
+      }
+
+      @media (max-width: 768px) {
+        .quiz-container {
+          padding: 15px;
+          width: 90dvw;
+        }
+
+        .question {
+          font-size: 1.1em;
+        }
+
+        .btn-submit {
+          font-size: 0.9em;
+          padding: 8px 15px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        body {
+          padding: 10px;
+        }
+
+        .quiz-container {
+          width: 100%;
+          box-shadow: none; /* Remove shadow on very small screens */
+        }
+
+        .question {
+          font-size: 1em;
+        }
+
+        .btn-submit {
+          font-size: 0.8em;
+          padding: 7px 12px;
+        }
+      }
+    </style>
+    <script>
+      // Timer functionality
+      let timeLeft = 30;
+
+      function updateTimer() {
+        document.getElementById("timer").innerHTML = timeLeft + " seconds";
+        if (timeLeft == 0) {
+          handleTimeout();
+        } else {
+          timeLeft--;
+          setTimeout(updateTimer, 1000);
+        }
+      }
+
+      function handleTimeout() {
+        const form = document.querySelector("form");
+        const selectedOption = form.querySelector(
+          'input[name="answer"]:checked'
+        );
+
+        if (!selectedOption) {
+          // Automatically select the first option
+          const firstOption = form.querySelector('input[name="answer"]');
+          firstOption.checked = true;
+        }
+
+        form.submit();
+      }
+
+      window.onload = updateTimer;
+    </script>
+  </head>
+  <body>
+    <div class="quiz-container">
+      <div class="quiz-header">
+        <h2>QUIZ</h2>
+        <div
+          class="progress-bar"
+          style="width: {{ (question_number / total_questions) * 100 }}%;"
+        ></div>
+      </div>
+      <div class="timer">Time left: <span id="timer">30 seconds</span></div>
+      <form method="POST">
+        <div class="question">{{ question }}</div>
+        <ul class="options">
+          {% for option in options %}
+          <li>
+            <label>
+              <input type="radio" name="answer" value="{{ option }}" required />
+              {{ option }}
+            </label>
+          </li>
+          {% endfor %}
+        </ul>
+        <button type="submit" class="btn-submit">Submit</button>
+      </form>
+    </div>
+  </body>
+</html>

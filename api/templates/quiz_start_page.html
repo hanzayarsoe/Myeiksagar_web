@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz Start Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.5;
+        }
+      }
+      .pulse {
+        animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 min-h-screen flex items-center justify-center p-4"
+  >
+    <div class="bg-white rounded-lg shadow-2xl p-8 max-w-md w-full">
+      <h1 class="text-3xl font-bold text-center mb-6 text-gray-800">
+        Welcome to the Quiz!
+      </h1>
+
+      <div class="mb-6">
+        <h2 class="text-xl font-semibold mb-2 text-gray-700">Rules:</h2>
+        <ul class="list-disc list-inside text-gray-600">
+          <li>
+            There will be three levels in this game. (easy, medium and hard)
+          </li>
+          <li>You will have 10 questions to answer.</li>
+          <li>Each question has a time limit of 30 seconds.</li>
+          <li>You can't go back to previous questions.</li>
+          <li>Your final score will be displayed at the end.</li>
+        </ul>
+      </div>
+
+      <div class="mb-6">
+        <h2 class="text-xl font-semibold mb-2 text-gray-700">Rewards:</h2>
+        <ul class="list-disc list-inside text-gray-600">
+          <li>100% score in easy level (+2 candies).</li>
+          <li>100% score in medium level (+2 candies).</li>
+          <li>100% score in hard level (+ 1 lolipop).</li>
+        </ul>
+      </div>
+
+      <!-- Start Quiz Button -->
+      <a
+        href="{{ url_for('quiz_start') }}"
+        class="block w-full bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 text-white font-bold py-3 px-4 rounded-full transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105 pulse text-center mb-4"
+      >
+        Start Quiz
+      </a>
+
+      <!-- Back Button -->
+      <button
+        onclick="window.history.back();"
+        class="block w-full bg-gray-400 hover:bg-gray-500 text-white font-bold py-3 px-4 rounded-full transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105 text-center"
+      >
+        Back
+      </button>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Next Level</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <style>
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-20px);
+        }
+      }
+      .float {
+        animation: float 3s ease-in-out infinite;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-gradient-to-r from-orange-400 to-pink-500 min-h-screen flex items-center justify-center p-4"
+  >
+    <div id="confetti"></div>
+    <div class="bg-white rounded-lg shadow-2xl p-8 max-w-md w-full text-center">
+      <div class="text-6xl mb-6 float">🏆</div>
+      <h1 class="text-4xl font-bold mb-4 text-orange-500">Level Complete!</h1>
+      <p class="text-xl mb-4">
+        Congratulations! You've completed the
+        <span class="font-semibold">{{ session['level'] }}</span> level.
+      </p>
+      <p class="text-lg mb-8">Are you ready for the next challenge?</p>
+      <div class="space-y-4">
+        <a
+          href="{{ url_for('start_next_level') }}"
+          class="block w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-4 rounded-full transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105"
+        >
+          Start {{ next_level.capitalize() }} Level
+        </a>
+        <a
+          href="{{ url_for('index') }}"
+          class="block w-full bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-3 px-4 rounded-full transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105"
+        >
+          Back to Home
+        </a>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script>
+      // Create audio context
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      const audioContext = new AudioContext();
+
+      // Function to play audio
+      function playAudio() {
+        fetch("{{ url_for('static', filename='sounds/success.mp3') }}")
+          .then((response) => response.arrayBuffer())
+          .then((arrayBuffer) => audioContext.decodeAudioData(arrayBuffer))
+          .then((audioBuffer) => {
+            const source = audioContext.createBufferSource();
+            source.buffer = audioBuffer;
+            source.connect(audioContext.destination);
+            source.start(0);
+          })
+          .catch((error) => console.error("Error with audio playback:", error));
+      }
+
+      // Try to play audio immediately
+      playAudio();
+
+      // Attempt to play audio on first user interaction
+      document.body.addEventListener(
+        "click",
+        function () {
+          if (audioContext.state === "suspended") {
+            audioContext.resume().then(() => playAudio());
+          }
+        },
+        { once: true }
+      );
+
+      // Trigger confetti effect
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 },
+      });
+
+      // Animate elements with GSAP
+      gsap.from("h1", { opacity: 0, y: -50, duration: 1, ease: "back" });
+      gsap.from("p", {
+        opacity: 0,
+        y: 50,
+        duration: 1,
+        ease: "back",
+        stagger: 0.2,
+      });
+      gsap.from("a", {
+        opacity: 0,
+        scale: 0.5,
+        duration: 0.5,
+        ease: "back",
+        stagger: 0.2,
+      });
+    </script>
+  </body>
+</html>

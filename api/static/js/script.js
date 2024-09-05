@@ -191,7 +191,6 @@ function segmentWord(text) {
 
 clearBtn.addEventListener("click", clearFields);
 translateBtn.addEventListener("click", () => {
-  console.log("translate btn clicked");
   var source = document.getElementById("text1").innerText;
   if (source == "စံစကား") {
     translateMyanmartoMyeik();

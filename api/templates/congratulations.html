@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Congratulations!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <style>
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-20px);
+        }
+      }
+      .float {
+        animation: float 3s ease-in-out infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.1);
+        }
+      }
+      .pulse {
+        animation: pulse 2s ease-in-out infinite;
+      }
+
+      .glass {
+        background: rgba(255, 255, 255, 0.25);
+        backdrop-filter: blur(10px);
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+      }
+    </style>
+  </head>
+  <body
+    class="bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 min-h-screen flex items-center justify-center p-4"
+  >
+    <div id="confetti"></div>
+    <div
+      class="bg-white rounded-lg shadow-2xl p-8 max-w-4xl w-full text-center relative overflow-hidden"
+    >
+      <div class="absolute top-0 left-0 w-full h-full">
+        <div class="absolute top-1/4 left-1/4 text-8xl float">🎉</div>
+        <div
+          class="absolute top-1/3 right-1/4 text-8xl float"
+          style="animation-delay: 0.5s"
+        >
+          🎊
+        </div>
+        <div
+          class="absolute bottom-1/4 left-1/3 text-8xl float"
+          style="animation-delay: 1s"
+        >
+          🏆
+        </div>
+      </div>
+      <div class="relative z-10 glass p-8">
+        <h1 class="text-6xl font-bold mb-6 text-purple-600 pulse">
+          Congratulations!
+        </h1>
+        <p class="text-2xl mb-8 text-gray-800">
+          You've completed all levels of the quiz. Well done!
+        </p>
+        <a
+          href="{{ url_for('index') }}"
+          class="inline-block bg-gradient-to-r from-purple-500 to-pink-500 hover:from-pink-500 hover:to-purple-500 text-white font-bold py-4 px-8 rounded-full transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105 text-xl"
+        >
+          Back to Home
+        </a>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script>
+      // Create audio context
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      const audioContext = new AudioContext();
+      // Function to play audio
+      function playAudio() {
+        fetch("{{ url_for('static', filename='sounds/congratulation.mp3') }}")
+          .then((response) => response.arrayBuffer())
+          .then((arrayBuffer) => audioContext.decodeAudioData(arrayBuffer))
+          .then((audioBuffer) => {
+            const source = audioContext.createBufferSource();
+            source.buffer = audioBuffer;
+            source.connect(audioContext.destination);
+            source.start(0);
+          })
+          .catch((error) => console.error("Error with audio playback:", error));
+      }
+      // Try to play audio immediately
+      playAudio();
+      // Attempt to play audio on first user interaction
+      document.body.addEventListener(
+        "click",
+        function () {
+          if (audioContext.state === "suspended") {
+            audioContext.resume().then(() => playAudio());
+          }
+        },
+        { once: true }
+      );
+      // Trigger confetti effect
+      function triggerConfetti() {
+        confetti({
+          particleCount: 150,
+          spread: 100,
+          origin: { y: 0.6 },
+        });
+      }
+      // Initial confetti burst
+      triggerConfetti();
+      // Periodic confetti bursts
+      setInterval(triggerConfetti, 3000);
+      // Animate elements with GSAP
+      gsap.from("h1", {
+        opacity: 0,
+        scale: 0.5,
+        duration: 1,
+        ease: "elastic.out(1, 0.5)",
+      });
+      gsap.from("p", { opacity: 0, y: 50, duration: 1, ease: "back.out(1.7)" });
+      gsap.from("a", {
+        opacity: 0,
+        y: 50,
+        duration: 1,
+        ease: "back.out(1.7)",
+        delay: 0.5,
+      });
+    </script>
+  </body>
+</html>

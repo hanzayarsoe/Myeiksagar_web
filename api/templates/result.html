@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz Result</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <style>
+      @keyframes float {
+        0% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-20px);
+        }
+        100% {
+          transform: translateY(0px);
+        }
+      }
+      .float {
+        animation: float 3s ease-in-out infinite;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-gradient-to-r from-blue-400 to-purple-500 min-h-screen flex items-center justify-center p-4"
+  >
+    <div id="confetti"></div>
+    <div class="bg-white rounded-lg shadow-2xl p-8 max-w-md w-full">
+      <h1 class="text-4xl font-bold text-center mb-6 text-gray-800">
+        Quiz Result
+      </h1>
+      <p class="text-xl text-center mb-4">
+        Level: <span class="font-semibold">{{ level.capitalize() }}</span>
+      </p>
+      <div class="text-3xl font-bold text-center mb-4">
+        <span class="text-green-500">{{ score }}</span> /
+        <span class="text-blue-500">{{ session['total_questions'] }}</span>
+      </div>
+      <div class="text-2xl font-semibold text-center mb-6 text-purple-600">
+        {{ (score / session['total_questions'] * 100) | round(2) }}%
+      </div>
+      <p class="text-lg text-center mb-6">
+        {% if score == session['total_questions'] %} Great job! You've mastered
+        this level! {% elif score >= session['total_questions'] * 0.7 %} Well
+        done! You're doing great! {% elif score >= session['total_questions'] *
+        0.5 %} Good effort! Keep practicing to improve. {% else %} Don't give
+        up! Try again to improve your score. {% endif %}
+      </p>
+      {% if score == session['total_questions'] and level != 'hard' %}
+      <a
+        href="{{ url_for('start_next_level') }}"
+        class="block w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-4 rounded-full transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105 text-center mb-4"
+      >
+        Next Level
+      </a>
+      {% else %}
+      <a
+        href="{{ url_for('quiz_start_page') }}"
+        class="block w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-full transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105 text-center mb-4"
+      >
+        Try Again
+      </a>
+      {% endif %}
+      <a
+        href="{{ url_for('index') }}"
+        class="block w-full bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-3 px-4 rounded-full transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105 text-center"
+      >
+        Back to Home
+      </a>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script>
+      // Create audio context
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      const audioContext = new AudioContext();
+
+      // Function to play audio
+      function playAudio() {
+          fetch("{{ url_for('static', filename='sounds/congratulation.mp3') }}")
+              .then(response => response.arrayBuffer())
+              .then(arrayBuffer => audioContext.decodeAudioData(arrayBuffer))
+              .then(audioBuffer => {
+                  const source = audioContext.createBufferSource();
+                  source.buffer = audioBuffer;
+                  source.connect(audioContext.destination);
+                  source.start(0);
+              })
+              .catch(error => console.error('Error with audio playback:', error));
+      }
+
+      // Try to play audio immediately
+      playAudio();
+
+      // Attempt to play audio on first user interaction
+      document.body.addEventListener('click', function() {
+          if (audioContext.state === 'suspended') {
+              audioContext.resume().then(() => playAudio());
+          }
+      }, { once: true });
+
+      // Trigger confetti effect
+      confetti({
+          particleCount: 100,
+          spread: 70,
+          origin: { y: 0.6 }
+      });
+
+      // Animate score with GSAP
+      gsap.from('.text-3xl', {opacity: 0, y: -50, duration: 1, ease: 'bounce'});
+      gsap.from('.text-2xl', {opacity: 0, y: -50, duration: 1, ease: 'bounce', delay: 0.5});
+
+      // Float animation for congratulatory message
+      if ({{ score }} == {{ session['total_questions'] }}) {
+          gsap.to('p.text-lg', {y: -20, duration: 2, repeat: -1, yoyo: true, ease: 'power1.inOut'});
+      }
+    </script>
+  </body>
+</html>
