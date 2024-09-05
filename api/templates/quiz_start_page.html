@@ -4,11 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Quiz Start Page</title>
-    <link
-      rel="shortcut icon"
-      href="../static/images/favicon.ico"
-      type="image/x-icon"
-    />
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
       @keyframes pulse {
@@ -65,7 +60,7 @@
 
       <!-- Back Button -->
       <button
-        onclick="window.history.back();"
+        onclick="window.location.href='{{ url_for('index') }}';"
         class="block w-full bg-gray-400 hover:bg-gray-500 text-white font-bold py-3 px-4 rounded-full transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105 text-center"
       >
         Back
