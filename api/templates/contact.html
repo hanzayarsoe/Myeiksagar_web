@@ -3,7 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Contact Form</title>
+    <title>Contact Us</title>
+    <link
+      rel="shortcut icon"
+      href="../static/images/favicon.ico"
+      type="image/x-icon"
+    />
     <script src="https://cdn.tailwindcss.com"></script>
     <script
       src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"
@@ -12,7 +17,7 @@
     <style>
       body {
         font-family: Arial, sans-serif;
-        background-color: #f5f5f5;
+        background-color: #c2c8cf;
         margin: 0;
         padding: 0;
         height: 100vh;
@@ -73,10 +78,77 @@
         color: #999;
         text-decoration: underline;
       }
+
+      /* Loading Spinner */
+      .spinner {
+        display: none;
+        width: 40px;
+        height: 40px;
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #3498db;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin: 20px auto;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* Toast Message */
+      .toast {
+        visibility: hidden;
+        min-width: 250px;
+        margin-left: -125px;
+        background-color: #333;
+        color: #fff;
+        text-align: center;
+        border-radius: 2px;
+        padding: 16px;
+        position: fixed;
+        z-index: 1;
+        left: 50%;
+        bottom: 30px;
+      }
+
+      .toast.show {
+        visibility: visible;
+        animation: fadein 0.5s, fadeout 0.5s 2.5s;
+      }
+
+      @keyframes fadein {
+        from {
+          bottom: 0;
+          opacity: 0;
+        }
+        to {
+          bottom: 30px;
+          opacity: 1;
+        }
+      }
+
+      @keyframes fadeout {
+        from {
+          bottom: 30px;
+          opacity: 1;
+        }
+        to {
+          bottom: 0;
+          opacity: 0;
+        }
+      }
     </style>
   </head>
   <body>
-    <header x-data="{ isOpen: false }" class="bg-white shadow-md">
+    <header
+      x-data="{ isOpen: false }"
+      class="bg-gradient-to-r from-blue-600 to-purple-600 shadow-md"
+    >
       <nav
         class="container mx-auto px-4 py-2 flex items-center justify-between"
       >
@@ -94,28 +166,28 @@
         <div class="hidden md:flex items-center space-x-4">
           <a
             href="{{ url_for('index') }}"
-            class="text-gray-800 py-2 px-4 hover:text-gray-600 hover:bg-gray-100 rounded-md"
+            class="text-white py-2 px-4 hover:bg-blue-500 rounded-md transition duration-300"
             >Home</a
           >
           <a
             href="{{url_for('quiz_start_page')}}"
-            class="text-gray-800 py-2 px-4 hover:text-gray-600 hover:bg-gray-100 rounded-md"
+            class="text-white py-2 px-4 hover:bg-blue-500 rounded-md transition duration-300"
             >Fun Game</a
           >
           <a
             href="https://myeiksagar-collect.vercel.app/"
             target="_blank"
-            class="text-gray-800 py-2 px-4 hover:text-gray-600 hover:bg-gray-100 rounded-md"
+            class="text-white py-2 px-4 hover:bg-blue-500 rounded-md transition duration-300"
             >Insert Data</a
           >
           <a
             href="{{url_for('about')}}"
-            class="text-gray-800 py-2 px-4 hover:text-gray-600 hover:bg-gray-100 rounded-md"
+            class="text-white py-2 px-4 hover:bg-blue-500 rounded-md transition duration-300"
             >About Us</a
           >
           <a
             href="{{url_for('contact')}}"
-            class="bg-black text-white py-2 px-4 hover:bg-gray-800 rounded-md"
+            class="bg-white text-blue-600 py-2 px-4 hover:bg-gray-100 rounded-md transition duration-300"
             >Contact us</a
           >
         </div>
@@ -125,7 +197,7 @@
           <button
             @click="isOpen = !isOpen"
             type="button"
-            class="text-gray-500 hover:text-gray-600 focus:outline-none focus:text-gray-600"
+            class="text-white hover:text-gray-200 focus:outline-none focus:text-gray-200"
             aria-label="toggle menu"
           >
             <svg viewBox="0 0 24 24" class="h-6 w-6 fill-current">
@@ -147,45 +219,46 @@
         x-transition:leave="transition ease-in duration-200"
         x-transition:leave-start="opacity-100 transform scale-100"
         x-transition:leave-end="opacity-0 transform scale-90"
-        class="md:hidden bg-white shadow-lg z-10 px-4 py-4 space-y-2"
+        class="md:hidden bg-blue-500 shadow-lg z-10 px-4 py-4 space-y-2"
       >
         <a
           href="{{ url_for('index') }}"
-          class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50"
+          class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-blue-600 transition duration-300"
           >Home</a
         >
         <a
           href="{{url_for('quiz_start_page')}}"
-          class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50"
+          class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-blue-600 transition duration-300"
           >Fun Game</a
         >
         <a
           href="https://myeiksagar-collect.vercel.app/"
           target="_blank"
-          class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50"
+          class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-blue-600 transition duration-300"
           >Insert Data</a
         >
         <a
           href="{{url_for('about')}}"
-          class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50"
+          class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-blue-600 transition duration-300"
           >About Us</a
         >
         <a
           href="{{url_for('contact')}}"
-          class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50"
+          class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-blue-600 transition duration-300"
           >Contact us</a
         >
       </div>
     </header>
+
     <div class="contact-container">
       <div class="contact-content">
         <h2>We are here to help!</h2>
         <p>
           Let us know how we can best serve you. Use the contact form to email
           us or select from the topics below that best fit your needs. It's an
-          honor to support you in your journey towards better health.
+          honor to support you in your journey towards better.
         </p>
-        <form>
+        <form id="feedbackForm">
           <input type="text" name="name" placeholder="Name" required />
           <input type="email" name="email" placeholder="Email" required />
           <input type="tel" name="phone" placeholder="Phone number" />
@@ -197,6 +270,8 @@
           ></textarea>
           <button type="submit">Send Message</button>
         </form>
+        <div id="spinner" class="spinner"></div>
+        <p id="submissionStatus"></p>
         <p class="recaptcha-text">
           This site is protected by reCAPTCHA and the Google
           <a href="#">Privacy Policy</a> and
@@ -204,5 +279,57 @@
         </p>
       </div>
     </div>
+
+    <div id="toast" class="toast">Message sent successfully!</div>
+
+    <script>
+      document
+        .getElementById("feedbackForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          var form = e.target;
+          var formData = new FormData(form);
+          var statusElement = document.getElementById("submissionStatus");
+          var spinnerElement = document.getElementById("spinner");
+          var toastElement = document.getElementById("toast");
+
+          // Show spinner
+          spinnerElement.style.display = "block";
+          statusElement.textContent = "";
+
+          fetch(
+            "https://script.google.com/macros/s/AKfycbwbKZx17THx81AKeAUcHlKr9loOTz9hOiD6rBi3N9bCz92mIR83kw2D4--gCDThuQGY/exec",
+            {
+              method: "POST",
+              body: formData,
+            }
+          )
+            .then((response) => response.text())
+            .then((result) => {
+              // Hide spinner
+              spinnerElement.style.display = "none";
+
+              // Show success message
+              toastElement.className = "toast show";
+              setTimeout(function () {
+                toastElement.className = toastElement.className.replace(
+                  "show",
+                  ""
+                );
+              }, 3000);
+
+              form.reset();
+            })
+            .catch((error) => {
+              // Hide spinner
+              spinnerElement.style.display = "none";
+
+              statusElement.textContent =
+                "An error occurred. Please try again.";
+              console.error("Error:", error);
+            });
+        });
+    </script>
   </body>
 </html>

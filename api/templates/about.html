@@ -3,104 +3,47 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mission, Vision, and Team Page</title>
+    <title>About Us</title>
+    <link
+      rel="shortcut icon"
+      href="../static/images/favicon.ico"
+      type="image/x-icon"
+    />
     <script src="https://cdn.tailwindcss.com"></script>
     <script
       src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"
       defer
     ></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "mission-blue": "#3498db",
+              "vision-green": "#2ecc71",
+              "tools-purple": "#9b59b6",
+            },
+          },
+        },
+      };
+    </script>
     <style>
       body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #f4f4f4;
+        background-color: #c2c8cf;
       }
 
       .hero {
-        margin-top: 20px;
-        background-image: url("../static/images/cu_myeik.jpg"); /* Replace with actual image URL */
+        background-image: url("../static/images/cu_myeik.jpg");
         background-size: cover;
         background-position: center;
-        height: 500px;
-        position: relative;
-      }
-
-      .section {
-        background-color: #e7e9f3;
-        text-align: center;
-        padding: 20px;
-      }
-
-      .section .icon {
-        font-size: 40px;
-        margin-bottom: 10px;
-        color: #333;
-      }
-
-      .section h2 {
-        font-size: 18px;
-        margin-bottom: 10px;
-        color: #333;
-      }
-
-      .icon {
-        margin-right: 20px;
-      }
-
-      .section p {
-        font-size: 14px;
-        color: #666;
-        line-height: 1.6;
-        margin: 0 20px;
-      }
-
-      .section-grid {
-        display: flex;
-        justify-content: space-around;
-        background-color: #6aa3f7;
-        padding: 20px 0;
-      }
-
-      .section-grid .grid-item {
-        display: flex;
-        text-align: center;
-        align-items: center;
-        width: 30%;
-      }
-
-      .team-section {
-        background-color: #fff;
-        padding: 40px 20px;
-        text-align: center;
-      }
-
-      .team-section h2 {
-        font-size: 24px;
-        color: #1a73e8;
-        margin-bottom: 20px;
-      }
-
-      .team-image {
-        background-image: url("../static/images/team.png"); /* Replace with actual image URL */
-        background-size: cover;
-        background-position: center;
-        height: 300px;
-        border-radius: 10px;
-        margin: 20px auto;
-        max-width: 800px;
-      }
-
-      .contact-container {
-        background-color: #fff;
-        padding: 20px;
-        text-align: center;
-        margin-top: 20px;
       }
     </style>
   </head>
   <body>
-    <header x-data="{ isOpen: false }" class="bg-white shadow-md">
+    <header
+      x-data="{ isOpen: false }"
+      class="bg-gradient-to-r from-blue-600 to-purple-600 shadow-md"
+    >
       <nav
         class="container mx-auto px-4 py-2 flex items-center justify-between"
       >
@@ -118,28 +61,28 @@
         <div class="hidden md:flex items-center space-x-4">
           <a
             href="{{ url_for('index') }}"
-            class="text-gray-800 py-2 px-4 hover:text-gray-600 hover:bg-gray-100 rounded-md"
+            class="text-white py-2 px-4 hover:bg-blue-500 rounded-md transition duration-300"
             >Home</a
           >
           <a
             href="{{url_for('quiz_start_page')}}"
-            class="text-gray-800 py-2 px-4 hover:text-gray-600 hover:bg-gray-100 rounded-md"
+            class="text-white py-2 px-4 hover:bg-blue-500 rounded-md transition duration-300"
             >Fun Game</a
           >
           <a
             href="https://myeiksagar-collect.vercel.app/"
             target="_blank"
-            class="text-gray-800 py-2 px-4 hover:text-gray-600 hover:bg-gray-100 rounded-md"
+            class="text-white py-2 px-4 hover:bg-blue-500 rounded-md transition duration-300"
             >Insert Data</a
           >
           <a
             href="{{url_for('about')}}"
-            class="bg-black text-white py-2 px-4 hover:bg-gray-800 rounded-md"
+            class="bg-white text-blue-600 py-2 px-4 hover:bg-gray-100 rounded-md transition duration-300"
             >About Us</a
           >
           <a
             href="{{url_for('contact')}}"
-            class="text-gray-800 py-2 px-4 hover:text-gray-600 hover:bg-gray-100 rounded-md"
+            class="text-white py-2 px-4 hover:bg-blue-500 rounded-md transition duration-300"
             >Contact us</a
           >
         </div>
@@ -149,7 +92,7 @@
           <button
             @click="isOpen = !isOpen"
             type="button"
-            class="text-gray-500 hover:text-gray-600 focus:outline-none focus:text-gray-600"
+            class="text-white hover:text-gray-200 focus:outline-none focus:text-gray-200"
             aria-label="toggle menu"
           >
             <svg viewBox="0 0 24 24" class="h-6 w-6 fill-current">
@@ -171,74 +114,154 @@
         x-transition:leave="transition ease-in duration-200"
         x-transition:leave-start="opacity-100 transform scale-100"
         x-transition:leave-end="opacity-0 transform scale-90"
-        class="md:hidden bg-white shadow-lg z-10 px-4 py-4 space-y-2"
+        class="md:hidden bg-blue-500 shadow-lg z-10 px-4 py-4 space-y-2"
       >
         <a
           href="{{ url_for('index') }}"
-          class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50"
+          class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-blue-600 transition duration-300"
           >Home</a
         >
         <a
           href="{{url_for('quiz_start_page')}}"
-          class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50"
+          class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-blue-600 transition duration-300"
           >Fun Game</a
         >
         <a
           href="https://myeiksagar-collect.vercel.app/"
           target="_blank"
-          class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50"
+          class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-blue-600 transition duration-300"
           >Insert Data</a
         >
         <a
           href="{{url_for('about')}}"
-          class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50"
+          class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-blue-600 transition duration-300"
           >About Us</a
         >
         <a
           href="{{url_for('contact')}}"
-          class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50"
+          class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-blue-600 transition duration-300"
           >Contact us</a
         >
       </div>
     </header>
 
-    <div style="width: 95%; max-width: 1440px; margin: 0 auto">
-      <div class="hero"></div>
-      <div class="section-grid">
-        <div class="grid-item">
-          <div class="icon">
-            <img src="../static/images/mission.png" alt="mission" />
-          </div>
-          <h2>Mission</h2>
+    <div class="hero h-96 relative">
+      <div class="absolute inset-0 bg-black opacity-50"></div>
+      <div class="absolute inset-0 flex items-center justify-center">
+        <h1 class="text-4xl md:text-6xl font-bold text-white text-center">
+          Computer University, Myeik
+        </h1>
+      </div>
+    </div>
+
+    <!-- Mission, Vision, and Tools Section -->
+    <div class="container mx-auto px-4 py-12">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div
+          class="bg-mission-blue rounded-lg shadow-lg p-6 text-center text-white transition-transform hover:scale-105"
+        >
+          <img
+            src="../static/images/mission.png"
+            alt="Mission"
+            class="w-16 h-16 mx-auto mb-4 bg-white rounded-full p-2"
+          />
+          <h2 class="text-2xl font-semibold mb-4">Our Mission</h2>
+          <p>
+            To provide quality education and foster innovation in language
+            technology.
+          </p>
         </div>
-        <div class="grid-item">
-          <div class="icon">
-            <img src="../static/images/vission.png" alt="vission" />
-          </div>
-          <h2>Vision</h2>
+        <div
+          class="bg-vision-green rounded-lg shadow-lg p-6 text-center text-white transition-transform hover:scale-105"
+        >
+          <img
+            src="../static/images/vission.png"
+            alt="Vision"
+            class="w-16 h-16 mx-auto mb-4 bg-white rounded-full p-2"
+          />
+          <h2 class="text-2xl font-semibold mb-4">Our Vision</h2>
+          <p>
+            To bridge communication gaps and promote cultural understanding in
+            the Myeik region.
+          </p>
         </div>
-        <div class="grid-item">
-          <div class="icon">
-            <img src="../static/images/technical.png" alt="technical" />
-          </div>
-          <h2>Technical Tools</h2>
+        <div
+          class="bg-tools-purple rounded-lg shadow-lg p-6 text-center text-white transition-transform hover:scale-105"
+        >
+          <img
+            src="../static/images/technical.png"
+            alt="Technical Tools"
+            class="w-16 h-16 mx-auto mb-4 bg-white rounded-full p-2"
+          />
+          <h2 class="text-2xl font-semibold mb-4">Technical Tools</h2>
+          <p>
+            Leveraging cutting-edge NLP technology for efficient language
+            translation.
+          </p>
         </div>
       </div>
+    </div>
 
-      <div class="section">
-        <p>
+    <!-- About Us Content -->
+    <div class="container mx-auto px-4 py-12">
+      <div class="bg-white rounded-lg shadow-lg p-8">
+        <h2 class="text-3xl font-semibold mb-6">
+          About Our Translation System
+        </h2>
+        <p class="text-gray-600 mb-6">
           In Myanmar's Myeik region, diverse languages make communication
           challenging. To bridge this gap, the Burmese-Myeik Translation System
           was developed using Natural Language Processing (NLP) technology. This
           system helps translate languages, enabling smoother communication
           across different cultures in the region.
         </p>
-      </div>
-
-      <div class="team-section">
-        <h2>Meet Our Team</h2>
-        <div class="team-image"></div>
+        <div class="aspect-w-16 aspect-h-9 mb-8">
+          <img
+            src="../static/images/computer_university.jpg"
+            alt="Myeik University"
+            class="object-cover rounded-lg shadow-md mx-auto"
+          />
+        </div>
       </div>
     </div>
+
+    <!-- Team Section -->
+    <div class="container mx-auto px-4 py-12">
+      <h2 class="text-3xl font-semibold mb-8 text-center">Meet Our Team</h2>
+      <div class="bg-white rounded-lg shadow-lg p-8">
+        <div class="aspect-w-16 aspect-h-9">
+          <img
+            src="../static/images/team.jpg"
+            alt="Our Team"
+            class="object-cover rounded-lg shadow-md"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Google Map Section -->
+    <div class="container mx-auto px-4 py-12">
+      <h2 class="text-3xl font-semibold mb-8 text-center">Find Us</h2>
+      <div class="w-full h-96">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d20071.189767933247!2d98.685988275282!3d12.46743338452573!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30fbbac4a940b3c5%3A0xfc8423e9db112e26!2sUniversity%20of%20Computer%20Studies%20(Myeik)!5e0!3m2!1sen!2sau!4v1725552731176!5m2!1sen!2sau"
+          width="100%"
+          height="100%"
+          style="border: 0"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          class="rounded-lg shadow-lg"
+        >
+        </iframe>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+      <div class="container mx-auto px-4 text-center">
+        <p>&copy; 2024 Computer University,Myeik. All rights reserved.</p>
+      </div>
+    </footer>
   </body>
 </html>
