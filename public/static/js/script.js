@@ -7,6 +7,7 @@ import {
   collection,
   query,
   where,
+  limit,
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -19,135 +20,145 @@ const firebaseConfig = {
   appId: "1:854716496772:web:6318d517660fe012603bd1",
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+const MAX_LOOKUP_CHARS = 200;
 
+const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-var text1 = document.getElementById("textarea1");
-var text2 = document.getElementById("textarea2");
-var translate = document.getElementById("translate");
-var dropdown = document.getElementById("dropdown");
-
-var translateBtn = document.getElementById("translateBtn");
-var clearBtn = document.getElementById("clearBtn");
-var segmentBtn = document.getElementById("segmentBtn");
-var swapBtn = document.getElementById("swapBtn");
+const text1 = document.getElementById("textarea1");
+const text2 = document.getElementById("textarea2");
+const translate = document.getElementById("translate");
+const dropdown = document.getElementById("dropdown");
+const translateBtn = document.getElementById("translateBtn");
+const clearBtn = document.getElementById("clearBtn");
+const segmentBtn = document.getElementById("segmentBtn");
+const swapBtn = document.getElementById("swapBtn");
+const loadingIndicator = document.getElementById("loadingIndicator");
 
 setTimeout(function () {
-  var preloader = document.getElementById("preloader");
-  var content = document.getElementById("content");
-
-  // Hide the preloader
-  preloader.style.display = "none";
-  // Show the website content
-  content.style.display = "block";
+  const preloader = document.getElementById("preloader");
+  const content = document.getElementById("content");
+  if (preloader) preloader.style.display = "none";
+  if (content) content.style.display = "block";
 }, 2000);
+
+function notify(message) {
+  window.alert(message);
+}
+
+function setLoading(isLoading) {
+  if (loadingIndicator) {
+    loadingIndicator.style.display = isLoading ? "block" : "none";
+  }
+}
+
+function normalizeLookupText(raw) {
+  return (raw || "").replace(/\s+/g, "").trim();
+}
+
+function validateLookupText(raw) {
+  const text = normalizeLookupText(raw);
+  if (!text) {
+    notify("ကျေးဇူးပြု၍ ပြောင်းလိုသော စကားလုံးကို ရေးပေးပါ။");
+    return null;
+  }
+  if (text.length > MAX_LOOKUP_CHARS) {
+    notify(`စကားလုံးသည် စာလုံး ${MAX_LOOKUP_CHARS} လုံးထက် မကျော်ရပါ။`);
+    return null;
+  }
+  return text;
+}
 
 let rotationDegree = 0;
 function swap() {
   rotationDegree += 180;
-  document.getElementById(
-    "swapBtn"
-  ).style.transform = `rotate(${rotationDegree}deg)`;
+  if (swapBtn) {
+    swapBtn.style.transform = `rotate(${rotationDegree}deg)`;
+  }
 
-  var temp = text1.value;
+  const temp = text1.value;
   text1.value = text2.value;
   text2.value = temp;
 
-  var spantext1 = document.getElementById("text1").innerText;
-  var spantext2 = document.getElementById("text2").innerText;
-
-  document.getElementById("text1").innerText = spantext2;
-  document.getElementById("text2").innerText = spantext1;
+  const label1 = document.getElementById("text1");
+  const label2 = document.getElementById("text2");
+  if (label1 && label2) {
+    const spantext1 = label1.innerText;
+    label1.innerText = label2.innerText;
+    label2.innerText = spantext1;
+  }
 }
+
 function clearFields() {
   text1.value = "";
   text2.value = "";
   translate.value = "";
-  console.log("Cleared Successfully");
 }
 
 async function translateMyanmartoMyeik() {
-  var myanmarText = text1.value;
-  var loadingIndicator = document.getElementById("loadingIndicator");
+  const myanmarText = validateLookupText(text1.value);
+  if (!myanmarText) return;
 
-  // Check if myanmarText is not empty before proceeding
-  if (myanmarText.trim() !== "") {
-    loadingIndicator.style.display = "block";
-    // Use getDoc to retrieve a document by its ID
-    myanmarText = myanmarText.replace(/\s/g, "");
+  setLoading(true);
+  try {
     const docRef = doc(db, "data", myanmarText);
     const docSnapshot = await getDoc(docRef);
 
-    if (docSnapshot.exists()) {
-      // Display the value in myeikText
-      text2.value = docSnapshot.data().value;
-      console.log("Document found with ID: ", myanmarText);
-    } else {
-      console.log("Document not found with ID: ", myanmarText);
-      alert(myanmarText + "   ဆိုသည့် စကားလုံးကို ရှာမတွေ့ပါ");
-      text1.value = "";
+    if (!docSnapshot.exists()) {
+      text2.value = "";
+      notify(`“${myanmarText}” ဆိုသည့် စကားလုံးကို ရှာမတွေ့ပါ။`);
+      return;
     }
-  } else {
-    console.error("myanmarText is empty. Please provide a non-empty value.");
-    alert(" ကျေးဇူးပြု၍ ပြောင်းလိုသော စားလုံးကိုရေးပေးပါ");
+
+    const value = docSnapshot.data()?.value;
+    if (typeof value !== "string" || !value.trim()) {
+      text2.value = "";
+      notify("ရရှိသော အချက်အလက် ပုံစံ မမှန်ကန်ပါ။");
+      return;
+    }
+    text2.value = value;
+  } catch (error) {
+    console.error("Myanmar→Myeik lookup failed:", error);
+    text2.value = "";
+    notify("ဘာသာပြန်ရာတွင် အမှားဖြစ်နေပါသည်။ ခဏနေမှ ထပ်မံကြိုးစားပါ။");
+  } finally {
+    setLoading(false);
   }
-  loadingIndicator.style.display = "none";
 }
 
 async function translateMyeiktoMyanmar() {
-  var myeikText = text1.value;
-  var loadingIndicator = document.getElementById("loadingIndicator");
+  const myeikText = validateLookupText(text1.value);
+  if (!myeikText) return;
 
-  if (myeikText.trim() !== "") {
-    loadingIndicator.style.display = "block";
-    myeikText = myeikText.replace(/\s/g, "");
-
+  setLoading(true);
+  try {
     const collectionRef = collection(db, "data");
-    const q = query(collectionRef, where("value", "==", myeikText));
+    const q = query(collectionRef, where("value", "==", myeikText), limit(1));
+    const querySnapshot = await getDocs(q);
 
-    try {
-      const querySnapshot = await getDocs(q);
-
-      if (!querySnapshot.empty) {
-        // Assuming there's only one matching document
-        const doc = querySnapshot.docs[0];
-        text2.value = doc.id;
-        console.log("Document found with ID: ", doc.id);
-      } else {
-        console.log("No matching documents found for value: ", myeikText);
-        alert(myeikText + "   ဆိုသည့် စကားလုံးကို ရှာမတွေ့ပါ");
-        text1.value = "";
-      }
-    } catch (error) {
-      console.error("Error getting documents: ", error);
+    if (querySnapshot.empty) {
+      text2.value = "";
+      notify(`“${myeikText}” ဆိုသည့် စကားလုံးကို ရှာမတွေ့ပါ။`);
+      return;
     }
-  } else {
-    console.error("myeikText is empty. Please provide a non-empty value.");
-    alert(" ကျေးဇူးပြု၍ ပြောင်းလိုသော စားလုံးကိုရေးပေးပါ");
-  }
 
-  loadingIndicator.style.display = "none";
+    text2.value = querySnapshot.docs[0].id;
+  } catch (error) {
+    console.error("Myeik→Myanmar lookup failed:", error);
+    text2.value = "";
+    notify("ဘာသာပြန်ရာတွင် အမှားဖြစ်နေပါသည်။ ခဏနေမှ ထပ်မံကြိုးစားပါ။");
+  } finally {
+    setLoading(false);
+  }
 }
 
-const myConsonant = "\u1000-\u1021"; // "က-အ"
-
+const myConsonant = "\u1000-\u1021";
 const enChar = "a-zA-Z0-9";
-
-// "ဣဤဥဦဧဩဪဿ၌၍၏၀-၉၊။!-/:-@[-`{-~\s"
 const otherChar =
   "\u1023\u1024\u1025\u1026\u1027\u1029\u102a\u103f\u104c\u104d\u104f\u1040-\u1049\u104a\u104b!-/:-@\\[-`\\{-~\\s";
-
 const ssSymbol = "\u1039";
-
-const ngaThat = "\u1004\u103a";
-
 const aThat = "\u103a";
 
-// Regular expression pattern for Myanmar syllable breaking
-// *** a consonant not after a subscript symbol AND a consonant is not
-// followed by a-That character or a subscript symbol
 const BREAK_PATTERN = new RegExp(
   `((?!${ssSymbol})[${myConsonant}](?![${aThat}${ssSymbol}])|[${enChar}${otherChar}])`,
   "mg"
@@ -155,7 +166,7 @@ const BREAK_PATTERN = new RegExp(
 
 function segmentSyllabus(text) {
   text = text.replace(/\s/g, "");
-  var outArray = text.replace(BREAK_PATTERN, "𝕊$1").split("𝕊");
+  const outArray = text.replace(BREAK_PATTERN, "𝕊$1").split("𝕊");
   if (outArray.length > 0) {
     outArray.shift();
   }
@@ -163,36 +174,42 @@ function segmentSyllabus(text) {
 }
 
 function segmentChar(text) {
-  text = text.replace(/\s/g, "");
-  var outArray = text.split("");
-  return outArray;
+  return text.replace(/\s/g, "").split("");
 }
 
-function segmentWord(text) {
+async function segmentWord(text) {
   text = text.replace(/\s/g, "");
+  setLoading(true);
   try {
-    fetch("/translate", {
+    const response = await fetch("/translate", {
       method: "POST",
-      body: JSON.stringify({ text: text }),
+      body: JSON.stringify({ text }),
       headers: {
         "Content-Type": "application/json",
       },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Translated text :", data.translated_text);
-        document.getElementById("translate").value = data.translated_text;
-      })
-      .catch((error) => console.error("Error:", error));
-  } catch (e) {
-    console.log("error: ", e);
+    });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) {
+      notify(data.error || "စာလုံးဖြတ်ရာတွင် အမှားဖြစ်နေပါသည်။");
+      return;
+    }
+    if (typeof data.translated_text !== "string") {
+      notify("စာလုံးဖြတ်ရလဒ် ပုံစံ မမှန်ကန်ပါ။");
+      return;
+    }
+    translate.value = data.translated_text;
+  } catch (error) {
+    console.error("Word segmentation failed:", error);
+    notify("စာလုံးဖြတ်ရာတွင် အမှားဖြစ်နေပါသည်။ ခဏနေမှ ထပ်မံကြိုးစားပါ။");
+  } finally {
+    setLoading(false);
   }
 }
 
 clearBtn.addEventListener("click", clearFields);
 translateBtn.addEventListener("click", () => {
-  var source = document.getElementById("text1").innerText;
-  if (source == "စံစကား") {
+  const source = document.getElementById("text1")?.innerText;
+  if (source === "စံစကား") {
     translateMyanmartoMyeik();
   } else {
     translateMyeiktoMyanmar();
@@ -200,23 +217,17 @@ translateBtn.addEventListener("click", () => {
 });
 swapBtn.addEventListener("click", swap);
 segmentBtn.addEventListener("click", () => {
-  if (translate.value === "") {
-    alert("ကျေးဇူးပြု၍ ဖြတ်လိုသောစာကိုရေးပေးပါ။");
+  if (!translate.value.trim()) {
+    notify("ကျေးဇူးပြု၍ ဖြတ်လိုသောစာကို ရေးပေးပါ။");
+    return;
+  }
+
+  const selectedMode = dropdown.value;
+  if (selectedMode === "syllable") {
+    translate.value = segmentSyllabus(translate.value).join("   ");
+  } else if (selectedMode === "character") {
+    translate.value = segmentChar(translate.value).join("   ");
   } else {
-    var selectedMode = dropdown.value;
-    if (selectedMode === "syllable") {
-      var resultvalue = segmentSyllabus(translate.value);
-      translate.value = resultvalue.join("   ");
-    } else if (selectedMode === "character") {
-      var resultvalue = segmentChar(translate.value);
-      translate.value = resultvalue.join("   ");
-    } else {
-      var myanOrMyeik = document.getElementById("translate").innerText;
-      if (myanOrMyeik == "ဘိတ်စကား") {
-        segmentWord(translate.value);
-      } else {
-        segmentWord(translate.value);
-      }
-    }
+    segmentWord(translate.value);
   }
 });

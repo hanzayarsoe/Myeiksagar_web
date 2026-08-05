@@ -14,10 +14,13 @@ Burmese ↔ Myeik dialect web app from UCS-MYEIK: Firestore dictionary lookup, C
 ```
 api/
   index.py                         # Flask app (Vercel entrypoint)
+  quiz_data.py                     # Culture quiz question bank
   mm-word-segmentation-300.crfsuite
   templates/
 public/
   static/                          # CSS, JS, images, fonts, sounds
+firestore.rules                    # Firestore security rules
+firebase.json
 requirements.txt
 vercel.json
 ```
@@ -63,3 +66,18 @@ Without a fixed `SECRET_KEY`, quiz sessions break on every serverless cold start
 | `/about`, `/contact` | Info pages |
 
 Dictionary inserts are handled by the companion app: [myeiksagar-collect](https://myeiksagar-collect.vercel.app/).
+
+## Firestore rules
+
+The translator reads from Firestore collection `data` (`{myanmarWord}` → `{ value: myeikWord }`).
+
+`firestore.rules` allows public **read**, schema-checked **create/update** (string `value` only, max 200 chars), and **denies delete**. Deploy rules to project `myeiksagar-c1009`:
+
+```bash
+npm i -g firebase-tools   # once
+firebase login
+firebase use myeiksagar-c1009
+firebase deploy --only firestore:rules
+```
+
+If the collect app later adds Firebase Auth, tighten writes to `request.auth != null` (or a specific UID allowlist).
