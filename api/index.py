@@ -3,17 +3,68 @@ import random
 import pycrfsuite
 from flask import Flask, jsonify, redirect, render_template, request, session, url_for
 
-app = Flask(__name__)
-app.secret_key = os.urandom(24)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+ROOT_DIR = os.path.dirname(BASE_DIR)
+MODEL_PATH = os.path.join(BASE_DIR, "mm-word-segmentation-300.crfsuite")
 
-# create segment function
+
+def _load_dotenv():
+    """Load KEY=VALUE pairs from a .env file (not a .env/ directory)."""
+    env_path = os.path.join(ROOT_DIR, ".env")
+    if not os.path.isfile(env_path):
+        return
+    with open(env_path, encoding="utf-8") as env_file:
+        for raw_line in env_file:
+            line = raw_line.strip()
+            if not line or line.startswith("#") or "=" not in line:
+                continue
+            key, _, value = line.partition("=")
+            key = key.strip()
+            value = value.strip().strip("'").strip('"')
+            if key:
+                os.environ.setdefault(key, value)
 
 
-# open trained model
-tagger = pycrfsuite.Tagger()
-tagger.open('./api/mm-word-segmentation-300.crfsuite')
+_load_dotenv()
 
-# here sentence is prepared_sentence and i is length of prepared_sentence
+app = Flask(
+    __name__,
+    template_folder=os.path.join(BASE_DIR, "templates"),
+    # Local Flask serves from public/static; on Vercel the CDN serves public/**
+    static_folder=os.path.join(ROOT_DIR, "public", "static"),
+    static_url_path="/static",
+)
+
+_secret_key = os.environ.get("SECRET_KEY")
+if not _secret_key:
+    if os.environ.get("VERCEL"):
+        raise RuntimeError(
+            "SECRET_KEY is required on Vercel. "
+            "Set it in Project Settings → Environment Variables."
+        )
+    _secret_key = "dev-only-insecure-secret-key"
+
+app.secret_key = _secret_key
+app.config.update(
+    SESSION_COOKIE_HTTPONLY=True,
+    SESSION_COOKIE_SAMESITE="Lax",
+    # Secure cookies on Vercel (HTTPS); keep off for local http://
+    SESSION_COOKIE_SECURE=bool(os.environ.get("VERCEL")),
+)
+
+_tagger = None
+
+
+def get_tagger():
+    """Lazy-load the CRF model so cold starts fail clearly and only when needed."""
+    global _tagger
+    if _tagger is None:
+        if not os.path.isfile(MODEL_PATH):
+            raise FileNotFoundError(f"CRF model not found at {MODEL_PATH}")
+        tagger = pycrfsuite.Tagger()
+        tagger.open(MODEL_PATH)
+        _tagger = tagger
+    return _tagger
 
 
 def create_char_features(sentence, i):
@@ -81,7 +132,7 @@ def segment_word(sentence):
     # remove white spaces from sentence
     sent = sentence.replace(" ", "")
     # tag sentence by trained model or create sentence features
-    prediction = tagger.tag(create_word_features(sent))
+    prediction = get_tagger().tag(create_word_features(sent))
     # assign 'complete' to empty string
     complete = ""
     # apply for loop on taged sentence

@@ -1,5 +1,15 @@
+# Local secrets (never commit)
+.env
+.env.*
+!.env.example
+
+# Virtualenvs (this repo historically used a folder named .env/)
 .env/
+.venv/
+venv/
+
 __pycache__/
+*.py[cod]
 .vscode/
 .vercel/
 .vercel
