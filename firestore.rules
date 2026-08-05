@@ -1,6 +1,7 @@
 rules_version = '2';
 
-// Dictionary collection used by the translator UI and myeiksagar-collect.
+// Dictionary collection used by the translator UI (public read) and
+// Data_Collector / myeiksagar-collect (authenticated email/password writes).
 // Deploy with: firebase deploy --only firestore:rules
 service cloud.firestore {
   match /databases/{database}/documents {
@@ -10,16 +11,24 @@ service cloud.firestore {
         && value.size() < 200;
     }
 
+    // Signed-in non-anonymous users (Data_Collector uses email/password).
+    // Anonymous Auth is blocked so the public web app cannot spam writes.
+    function isCollector() {
+      return request.auth != null
+        && request.auth.token.firebase.sign_in_provider != 'anonymous';
+    }
+
     match /data/{wordId} {
-      // Public read for the translator
+      // Public read for the translator dictionary UX
       allow get, list: if true;
 
-      // Writes only create/update a single string field "value".
-      // No deletes from clients — clean up in Firebase console if needed.
-      allow create, update: if isValidWord(wordId)
+      // Authenticated collectors only; schema-checked create/update
+      allow create, update: if isCollector()
+        && isValidWord(wordId)
         && request.resource.data.keys().hasOnly(['value'])
         && isValidWord(request.resource.data.value);
 
+      // No client deletes — clean up in Firebase console if needed
       allow delete: if false;
     }
 
