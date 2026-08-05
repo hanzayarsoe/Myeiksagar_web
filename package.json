@@ -1,0 +1,7 @@
+{
+  "private": true,
+  "name": "myeiksagar-web",
+  "engines": {
+    "node": "24.x"
+  }
+}
