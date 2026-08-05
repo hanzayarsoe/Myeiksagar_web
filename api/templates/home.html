@@ -191,7 +191,7 @@
                   id="textarea1"
                   class="shadow appearance-none border rounded w-full h-32 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   rows="4"
-                  placeholder="Enter Text...."
+                  placeholder="စာကြောင်း သို့မဟုတ် စကားလုံး ရေးပါ..."
                 ></textarea>
               </div>
               <div>
@@ -219,8 +219,8 @@
                   id="textarea2"
                   class="shadow appearance-none border rounded w-full h-32 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   rows="4"
-                  placeholder="Enter Text...."
-                  disabled
+                  placeholder="ဘာသာပြန်ရလဒ်..."
+                  readonly
                 ></textarea>
               </div>
             </div>
@@ -238,6 +238,15 @@
                 Clear
               </button>
             </div>
+            <p class="text-sm text-gray-600 text-center mt-3">
+              စာကြောင်းကို စကားလုံးခွဲပြီး အဘိဓာန်ဖြင့် ဘာသာပြန်ပါသည်။ မရှိသေးသော
+              စကားလုံးများကို အောက်တွင် ပြသပြီး Insert Data မှ ထည့်နိုင်ပါသည်။
+            </p>
+            <div
+              id="translationStatus"
+              class="mt-4 hidden rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm text-gray-800"
+              aria-live="polite"
+            ></div>
             <div class="mt-8">
               <h2 class="text-2xl font-bold mb-4">
                 Burmese - Myeik Language Segmentation

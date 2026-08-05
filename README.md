@@ -1,6 +1,6 @@
 # Myeiksagar (ဘိတ်စကား)
 
-Burmese ↔ Myeik dialect web app from UCS-MYEIK: Firestore dictionary lookup, CRF word segmentation, and a Myeik culture quiz.
+Burmese ↔ Myeik dialect web app from UCS-MYEIK: dictionary translation (exact phrase, then word-level compose), CRF word segmentation, and a Myeik culture quiz. Missing words link out to the collect app for corpus growth.
 
 ## Stack
 
@@ -60,8 +60,8 @@ Without a fixed `SECRET_KEY`, quiz sessions break on every serverless cold start
 
 | Path | Purpose |
 |------|---------|
-| `/` | Translator home |
-| `/translate` | CRF word segmentation API |
+| `/` | Translator home (phrase → segment → dictionary compose) |
+| `/translate` | CRF word segmentation API (also used by phrase translation) |
 | `/quiz_start_page` … `/quiz` | Culture quiz |
 | `/about`, `/contact` | Info pages |
 
