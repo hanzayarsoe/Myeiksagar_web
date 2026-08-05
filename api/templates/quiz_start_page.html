@@ -3,68 +3,54 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Quiz Start Page</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-      @keyframes pulse {
-        0%,
-        100% {
-          opacity: 1;
-        }
-        50% {
-          opacity: 0.5;
-        }
-      }
-      .pulse {
-        animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-      }
-    </style>
+    <title>Fun Game · Myeiksagar</title>
+    <link
+      rel="shortcut icon"
+      href="{{ url_for('static', filename='images/favicon.ico') }}"
+      type="image/x-icon"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,500;0,7..72,600;0,7..72,700;1,7..72,500&family=Noto+Sans+Myanmar:wght@400;600;700&family=Noto+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/myeiksagar.css') }}"
+    />
   </head>
-  <body
-    class="bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 min-h-screen flex items-center justify-center p-4"
-  >
-    <div class="bg-white rounded-lg shadow-2xl p-8 max-w-md w-full">
-      <h1 class="text-3xl font-bold text-center mb-6 text-gray-800">
-        Welcome to the Quiz!
-      </h1>
+  <body>
+    <main class="ms-main--center">
+      <div class="ms-quiz-shell">
+        <p class="ms-kicker">ဘိတ်စကား · Culture quiz</p>
+        <h1>Welcome to the quiz</h1>
 
-      <div class="mb-6">
-        <h2 class="text-xl font-semibold mb-2 text-gray-700">Rules:</h2>
-        <ul class="list-disc list-inside text-gray-600">
-          <li>
-            There will be three levels in this game. (easy, medium and hard)
-          </li>
+        <h2 style="font-size: 1.1rem; text-align: left">Rules</h2>
+        <ul>
+          <li>Three levels: easy, medium, and hard.</li>
           <li>You will have 10 questions to answer.</li>
           <li>Each question has a time limit of 30 seconds.</li>
           <li>You can't go back to previous questions.</li>
           <li>Your final score will be displayed at the end.</li>
         </ul>
-      </div>
 
-      <div class="mb-6">
-        <h2 class="text-xl font-semibold mb-2 text-gray-700">Rewards:</h2>
-        <ul class="list-disc list-inside text-gray-600">
+        <h2 style="font-size: 1.1rem; text-align: left">Rewards</h2>
+        <ul>
           <li>100% score in easy level (+2 candies).</li>
           <li>100% score in medium level (+2 candies).</li>
-          <li>100% score in hard level (+ 1 lolipop).</li>
+          <li>100% score in hard level (+1 lollipop).</li>
         </ul>
+
+        <div class="ms-stack">
+          <a href="{{ url_for('quiz_start') }}" class="ms-btn ms-btn--accent ms-btn--lg ms-btn--block">
+            Start quiz
+          </a>
+          <a href="{{ url_for('index') }}" class="ms-btn ms-btn--ghost ms-btn--block">
+            Back to home
+          </a>
+        </div>
       </div>
-
-      <!-- Start Quiz Button -->
-      <a
-        href="{{ url_for('quiz_start') }}"
-        class="block w-full bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 text-white font-bold py-3 px-4 rounded-full transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105 pulse text-center mb-4"
-      >
-        Start Quiz
-      </a>
-
-      <!-- Back Button -->
-      <button
-        onclick="window.location.href='{{ url_for('index') }}';"
-        class="block w-full bg-gray-400 hover:bg-gray-500 text-white font-bold py-3 px-4 rounded-full transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105 text-center"
-      >
-        Back
-      </button>
-    </div>
+    </main>
   </body>
 </html>

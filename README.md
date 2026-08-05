@@ -5,7 +5,7 @@ Burmese ↔ Myeik dialect web app from UCS-MYEIK: dictionary translation (exact 
 ## Stack
 
 - **Backend:** Flask 3 + `python-crfsuite` (`api/index.py`)
-- **Frontend:** Jinja templates + Tailwind/Alpine CDN
+- **Frontend:** Jinja templates + `public/static/css/myeiksagar.css` (+ Alpine for mobile nav)
 - **Data:** Firebase Firestore (client-side dictionary)
 - **Deploy:** Vercel Python function + CDN static from `public/`
 

@@ -91,7 +91,7 @@ function renderTranslationStatus({ found, missing, mode }) {
   if (!missing.length && found > 0) {
     translationStatus.classList.remove("hidden");
     translationStatus.innerHTML = `
-      <p class="font-medium text-green-800">
+      <p class="ms-status__ok">
         အဘိဓာန်တွင် စကားလုံး ${found} လုံး အပြည့်အဝ တွေ့ရှိပါသည်။
       </p>
     `;
@@ -115,7 +115,7 @@ function renderTranslationStatus({ found, missing, mode }) {
         href="${collectUrlFor(word)}"
         target="_blank"
         rel="noopener noreferrer"
-        class="inline-flex items-center rounded-full bg-white border border-amber-300 px-3 py-1 text-amber-900 hover:bg-amber-100"
+        class="ms-chip"
         title="Insert Data တွင် ထည့်ရန်"
       >${word}</a>`
     )
@@ -123,13 +123,13 @@ function renderTranslationStatus({ found, missing, mode }) {
 
   translationStatus.classList.remove("hidden");
   translationStatus.innerHTML = `
-    <p class="mb-2">
-      <span class="font-medium">${directionHint}</span> —
+    <p class="ms-status__line">
+      <strong>${directionHint}</strong> —
       တွေ့ရှိ ${found} လုံး၊ မရှိသေး ${missing.length} လုံး။
-      မရှိသော စကားလုံးများကို <code class="text-xs">[...]</code> ဖြင့် ပြထားပါသည်။
+      မရှိသော စကားလုံးများကို <code>[...]</code> ဖြင့် ပြထားပါသည်။
     </p>
-    <p class="mb-2 text-gray-700">အဘိဓာန်သို့ ထည့်ရန် (Insert Data):</p>
-    <div class="flex flex-wrap gap-2">${missingLinks}</div>
+    <p class="ms-status__line">အဘိဓာန်သို့ ထည့်ရန် (Insert Data):</p>
+    <div class="ms-chip-row">${missingLinks}</div>
   `;
 }
 

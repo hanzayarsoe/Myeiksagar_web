@@ -3,284 +3,132 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Contact Us</title>
+    <title>Contact · Myeiksagar</title>
     <link
       rel="shortcut icon"
-      href="../static/images/favicon.ico"
+      href="{{ url_for('static', filename='images/favicon.ico') }}"
       type="image/x-icon"
     />
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,500;0,7..72,600;0,7..72,700;1,7..72,500&family=Noto+Sans+Myanmar:wght@400;600;700&family=Noto+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/myeiksagar.css') }}"
+    />
     <script
       src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"
       defer
     ></script>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        background-color: #c2c8cf;
-        margin: 0;
-        padding: 0;
-        height: 100vh;
-      }
-
-      .contact-container {
-        background-color: #fff;
-        padding: 40px;
-        border-radius: 10px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        max-width: 500px;
-        margin: 0 auto;
-        margin-top: 20px;
-        width: 100%;
-      }
-
-      .contact-content h2 {
-        margin-bottom: 20px;
-        color: #555;
-      }
-
-      .contact-content p {
-        margin-bottom: 20px;
-        color: #777;
-        line-height: 1.6;
-      }
-
-      form input,
-      form textarea {
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 20px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-      }
-
-      form button {
-        background-color: #d35b45;
-        color: white;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        width: 100%;
-      }
-
-      form button:hover {
-        background-color: #bf4f39;
-      }
-
-      .recaptcha-text {
-        font-size: 12px;
-        color: #999;
-        margin-top: 20px;
-      }
-
-      .recaptcha-text a {
-        color: #999;
-        text-decoration: underline;
-      }
-
-      /* Loading Spinner */
-      .spinner {
-        display: none;
-        width: 40px;
-        height: 40px;
-        border: 4px solid #f3f3f3;
-        border-top: 4px solid #3498db;
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-        margin: 20px auto;
-      }
-
-      @keyframes spin {
-        0% {
-          transform: rotate(0deg);
-        }
-        100% {
-          transform: rotate(360deg);
-        }
-      }
-
-      /* Toast Message */
-      .toast {
-        visibility: hidden;
-        min-width: 250px;
-        margin-left: -125px;
-        background-color: #333;
-        color: #fff;
-        text-align: center;
-        border-radius: 2px;
-        padding: 16px;
-        position: fixed;
-        z-index: 1;
-        left: 50%;
-        bottom: 30px;
-      }
-
-      .toast.show {
-        visibility: visible;
-        animation: fadein 0.5s, fadeout 0.5s 2.5s;
-      }
-
-      @keyframes fadein {
-        from {
-          bottom: 0;
-          opacity: 0;
-        }
-        to {
-          bottom: 30px;
-          opacity: 1;
-        }
-      }
-
-      @keyframes fadeout {
-        from {
-          bottom: 30px;
-          opacity: 1;
-        }
-        to {
-          bottom: 0;
-          opacity: 0;
-        }
-      }
-    </style>
   </head>
   <body>
-    <header
-      x-data="{ isOpen: false }"
-      class="bg-gradient-to-r from-blue-600 to-purple-600 shadow-md"
-    >
-      <nav
-        class="container mx-auto px-4 py-2 flex items-center justify-between"
-      >
-        <!-- Logo -->
-        <div class="flex items-center">
+    <header class="ms-header" x-data="{ isOpen: false }">
+      <nav class="ms-nav" aria-label="Primary">
+        <a class="ms-brand" href="{{ url_for('index') }}">
           <img
-            src="../static/images/school_logo.png"
-            alt="Logo"
-            class="rounded-full"
-            style="width: 60px; height: 60px"
+            class="ms-brand__logo"
+            src="{{ url_for('static', filename='images/school_logo.png') }}"
+            alt="UCS Myeik"
           />
-        </div>
-
-        <!-- Nav Links (Desktop) -->
-        <div class="hidden md:flex items-center space-x-4">
-          <a
-            href="{{ url_for('index') }}"
-            class="text-white py-2 px-4 hover:bg-blue-500 rounded-md transition duration-300"
-            >Home</a
-          >
-          <a
-            href="{{url_for('quiz_start_page')}}"
-            class="text-white py-2 px-4 hover:bg-blue-500 rounded-md transition duration-300"
-            >Fun Game</a
-          >
+          <span class="ms-brand__text">
+            <span class="ms-brand__my">ဘိတ်စကား</span>
+            <span class="ms-brand__en">Myeiksagar</span>
+          </span>
+        </a>
+        <div class="ms-nav__links">
+          <a href="{{ url_for('index') }}" class="ms-nav__link">Home</a>
+          <a href="{{ url_for('quiz_start_page') }}" class="ms-nav__link">Fun Game</a>
           <a
             href="https://myeiksagar-collect.vercel.app/"
             target="_blank"
-            class="text-white py-2 px-4 hover:bg-blue-500 rounded-md transition duration-300"
+            rel="noopener noreferrer"
+            class="ms-nav__link"
             >Insert Data</a
           >
-          <a
-            href="{{url_for('about')}}"
-            class="text-white py-2 px-4 hover:bg-blue-500 rounded-md transition duration-300"
-            >About Us</a
-          >
-          <a
-            href="{{url_for('contact')}}"
-            class="bg-white text-blue-600 py-2 px-4 hover:bg-gray-100 rounded-md transition duration-300"
-            >Contact us</a
-          >
+          <a href="{{ url_for('about') }}" class="ms-nav__link">About Us</a>
+          <a href="{{ url_for('contact') }}" class="ms-nav__link is-active">Contact</a>
         </div>
-
-        <!-- Mobile Nav Button -->
-        <div class="md:hidden">
-          <button
-            @click="isOpen = !isOpen"
-            type="button"
-            class="text-white hover:text-gray-200 focus:outline-none focus:text-gray-200"
-            aria-label="toggle menu"
-          >
-            <svg viewBox="0 0 24 24" class="h-6 w-6 fill-current">
-              <path
-                fill-rule="evenodd"
-                d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2z"
-              ></path>
-            </svg>
-          </button>
-        </div>
+        <button
+          class="ms-nav__toggle"
+          type="button"
+          @click="isOpen = !isOpen"
+          :aria-expanded="isOpen.toString()"
+          aria-label="Toggle menu"
+        >
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M4 6h16v2H4V6zm0 5h16v2H4v-2zm0 5h16v2H4v-2z" />
+          </svg>
+        </button>
       </nav>
-
-      <!-- Mobile Menu -->
-      <div
-        x-show="isOpen"
-        x-transition:enter="transition ease-out duration-200"
-        x-transition:enter-start="opacity-0 transform scale-90"
-        x-transition:enter-end="opacity-100 transform scale-100"
-        x-transition:leave="transition ease-in duration-200"
-        x-transition:leave-start="opacity-100 transform scale-100"
-        x-transition:leave-end="opacity-0 transform scale-90"
-        class="md:hidden bg-blue-500 shadow-lg z-10 px-4 py-4 space-y-2"
-      >
-        <a
-          href="{{ url_for('index') }}"
-          class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-blue-600 transition duration-300"
-          >Home</a
-        >
-        <a
-          href="{{url_for('quiz_start_page')}}"
-          class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-blue-600 transition duration-300"
-          >Fun Game</a
-        >
+      <div class="ms-nav__mobile" x-show="isOpen" x-cloak>
+        <a href="{{ url_for('index') }}" class="ms-nav__link">Home</a>
+        <a href="{{ url_for('quiz_start_page') }}" class="ms-nav__link">Fun Game</a>
         <a
           href="https://myeiksagar-collect.vercel.app/"
           target="_blank"
-          class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-blue-600 transition duration-300"
+          rel="noopener noreferrer"
+          class="ms-nav__link"
           >Insert Data</a
         >
-        <a
-          href="{{url_for('about')}}"
-          class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-blue-600 transition duration-300"
-          >About Us</a
-        >
-        <a
-          href="{{url_for('contact')}}"
-          class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-blue-600 transition duration-300"
-          >Contact us</a
-        >
+        <a href="{{ url_for('about') }}" class="ms-nav__link">About Us</a>
+        <a href="{{ url_for('contact') }}" class="ms-nav__link is-active">Contact</a>
       </div>
     </header>
 
-    <div class="contact-container">
-      <div class="contact-content">
-        <h2>We are here to help!</h2>
-        <p>
-          Let us know how we can best serve you. Use the contact form to email
-          us or select from the topics below that best fit your needs. It's an
-          honor to support you in your journey towards better.
-        </p>
-        <form id="feedbackForm">
-          <input type="text" name="name" placeholder="Name" required />
-          <input type="email" name="email" placeholder="Email" required />
-          <input type="tel" name="phone" placeholder="Phone number" />
-          <textarea
-            name="comment"
-            placeholder="Comment"
-            rows="4"
-            required
-          ></textarea>
-          <button type="submit">Send Message</button>
-        </form>
-        <div id="spinner" class="spinner"></div>
-        <p id="submissionStatus"></p>
-        <p class="recaptcha-text">
-          This site is protected by reCAPTCHA and the Google
-          <a href="#">Privacy Policy</a> and
-          <a href="#">Terms of Service</a> apply.
-        </p>
+    <main class="ms-main">
+      <div class="ms-contact">
+        <div class="ms-panel">
+          <h1>Write to the team</h1>
+          <p class="ms-section__lead" style="margin-bottom: 1.25rem">
+            Questions about ဘိတ်စကား, the dictionary, or the culture quiz —
+            send a note below.
+          </p>
+          <form id="feedbackForm" class="ms-form">
+            <div class="ms-field">
+              <label for="name">Name</label>
+              <input id="name" type="text" name="name" placeholder="Your name" required />
+            </div>
+            <div class="ms-field">
+              <label for="email">Email</label>
+              <input id="email" type="email" name="email" placeholder="you@example.com" required />
+            </div>
+            <div class="ms-field">
+              <label for="phone">Phone</label>
+              <input id="phone" type="tel" name="phone" placeholder="Optional" />
+            </div>
+            <div class="ms-field">
+              <label for="comment">Comment</label>
+              <textarea
+                id="comment"
+                name="comment"
+                placeholder="How can we help?"
+                rows="4"
+                required
+              ></textarea>
+            </div>
+            <button type="submit" class="ms-btn ms-btn--primary ms-btn--block">
+              Send message
+            </button>
+          </form>
+          <div id="spinner" class="ms-spinner"></div>
+          <p id="submissionStatus"></p>
+          <p class="ms-form__note">
+            This site is protected by reCAPTCHA and the Google
+            <a href="https://policies.google.com/privacy">Privacy Policy</a> and
+            <a href="https://policies.google.com/terms">Terms of Service</a> apply.
+          </p>
+        </div>
       </div>
-    </div>
+    </main>
 
-    <div id="toast" class="toast">Message sent successfully!</div>
+    <div id="toast" class="ms-toast">Message sent successfully!</div>
+
+    <footer class="ms-footer">
+      <p>&copy; 2024 Computer University, Myeik · Myeiksagar</p>
+    </footer>
 
     <script>
       document
@@ -294,7 +142,6 @@
           var spinnerElement = document.getElementById("spinner");
           var toastElement = document.getElementById("toast");
 
-          // Show spinner
           spinnerElement.style.display = "block";
           statusElement.textContent = "";
 
@@ -306,25 +153,16 @@
             }
           )
             .then((response) => response.text())
-            .then((result) => {
-              // Hide spinner
+            .then(() => {
               spinnerElement.style.display = "none";
-
-              // Show success message
-              toastElement.className = "toast show";
+              toastElement.className = "ms-toast show";
               setTimeout(function () {
-                toastElement.className = toastElement.className.replace(
-                  "show",
-                  ""
-                );
+                toastElement.className = "ms-toast";
               }, 3000);
-
               form.reset();
             })
             .catch((error) => {
-              // Hide spinner
               spinnerElement.style.display = "none";
-
               statusElement.textContent =
                 "An error occurred. Please try again.";
               console.error("Error:", error);
