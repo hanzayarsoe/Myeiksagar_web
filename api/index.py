@@ -9,20 +9,21 @@ MODEL_PATH = os.path.join(BASE_DIR, "mm-word-segmentation-300.crfsuite")
 
 
 def _load_dotenv():
-    """Load KEY=VALUE pairs from a .env file (not a .env/ directory)."""
-    env_path = os.path.join(ROOT_DIR, ".env")
-    if not os.path.isfile(env_path):
-        return
-    with open(env_path, encoding="utf-8") as env_file:
-        for raw_line in env_file:
-            line = raw_line.strip()
-            if not line or line.startswith("#") or "=" not in line:
-                continue
-            key, _, value = line.partition("=")
-            key = key.strip()
-            value = value.strip().strip("'").strip('"')
-            if key:
-                os.environ.setdefault(key, value)
+    """Load KEY=VALUE pairs from .env / .env.local files (not a .env/ directory)."""
+    for name in (".env", ".env.local"):
+        env_path = os.path.join(ROOT_DIR, name)
+        if not os.path.isfile(env_path):
+            continue
+        with open(env_path, encoding="utf-8") as env_file:
+            for raw_line in env_file:
+                line = raw_line.strip()
+                if not line or line.startswith("#") or "=" not in line:
+                    continue
+                key, _, value = line.partition("=")
+                key = key.strip()
+                value = value.strip().strip("'").strip('"')
+                if key:
+                    os.environ.setdefault(key, value)
 
 
 _load_dotenv()
