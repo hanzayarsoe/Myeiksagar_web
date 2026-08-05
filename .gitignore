@@ -1,4 +1,4 @@
-# Local secrets (never commit)
+# Local secrets (never commit real env files)
 .env
 .env.*
 !.env.example
@@ -7,9 +7,16 @@
 .env/
 .venv/
 venv/
+env/
 
 __pycache__/
 *.py[cod]
+*$py.class
+.Python
+
 .vscode/
+.idea/
 .vercel/
 .vercel
+*.log
+.DS_Store
