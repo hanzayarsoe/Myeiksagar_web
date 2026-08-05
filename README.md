@@ -66,6 +66,7 @@ Copy `.env.example` to `.env`:
 
 ```env
 SECRET_KEY=replace-with-a-long-random-string
+# FLASK_DEBUG=1   # local only; never set on Vercel
 ```
 
 Generate a key with:
@@ -74,7 +75,7 @@ Generate a key with:
 python -c "import secrets; print(secrets.token_hex(32))"
 ```
 
-On Vercel, set `SECRET_KEY` for Production, Preview, and Development. Without a fixed key, quiz sessions break on serverless cold starts.
+On Vercel, set `SECRET_KEY` for Production, Preview, and Development. Without a fixed key, quiz sessions break on serverless cold starts. Local `python api/index.py` enables the Flask debugger only when `FLASK_DEBUG` is truthy and not on Vercel/production.
 
 ### Main routes
 
@@ -87,6 +88,22 @@ On Vercel, set `SECRET_KEY` for Production, Preview, and Development. Without a 
 
 Dictionary inserts: [myeiksagar-collect](https://myeiksagar-collect.vercel.app/).
 
-### Firestore
+### Firestore / Security
 
-Collection `data`: `{myanmarWord}` → `{ value: myeikWord }`. Rules allow public read, schema-checked create/update, and deny delete. See `firestore.rules`.
+Collection `data`: `{myanmarWord}` → `{ value: myeikWord }`.
+
+| Access | Rule |
+|--------|------|
+| Read (`get` / `list`) | Public (translator UX) |
+| Create / update | Firebase Auth signed-in, **non-anonymous** (Data_Collector email/password), plus schema checks on `value` |
+| Delete | Denied from clients |
+
+Firebase **web API keys in client JS are expected** — they identify the project; access is enforced by these rules, not by hiding the key.
+
+Deploy rules after changes:
+
+```bash
+firebase deploy --only firestore:rules
+```
+
+Requires Email/Password Authentication enabled in the Firebase console for the collector app. See `firestore.rules`.
