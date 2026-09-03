@@ -54,10 +54,12 @@
       <div class="ms-quiz-shell">
         <p class="ms-kicker">Quiz</p>
         <h2>Question {{ question_number }} / {{ total_questions }}</h2>
-        <div
-          class="ms-progress"
-          style="width: {{ (question_number / total_questions) * 100 }}%;"
-        ></div>
+        <div class="ms-progress-track">
+          <div
+            class="ms-progress"
+            style="width: {{ (question_number / total_questions) * 100 }}%;"
+          ></div>
+        </div>
         <div class="ms-timer">Time left: <span id="timer">30 seconds</span></div>
         <form method="POST">
           <div class="ms-question">{{ question }}</div>
